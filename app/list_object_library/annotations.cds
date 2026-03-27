@@ -1,0 +1,1 @@
+using CatService as service from '../../srv/cat-service';

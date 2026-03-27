@@ -1,0 +1,107 @@
+
+@baseUrl = http://localhost:4004/odata/v4/cat
+
+### CREATE AUTHOR
+POST {{baseUrl}}/Authors
+Content-Type: application/json
+
+{
+  "name": "J.K. Rowling",
+  "country": "UK",
+  "businessId": "AUTH001",
+  "address_street": "King Street",
+  "address_city": "London",
+  "address_zipCode": "SW1A1AA"
+}
+
+### CREATE BOOK (VALID)
+POST {{baseUrl}}/Books
+Content-Type: application/json
+
+{
+"title": "Harry Potter",
+"price": 500,
+"stock": 10,
+"genre": "Fantasy",
+"author": "79c9df20-fb6c-4b9e-9211-08f12876a854"
+}
+
+
+### NEGATIVE TEST - PRICE < 0 (Should Fail)
+POST {{baseUrl}}/Books
+Content-Type: application/json
+
+{
+"title": "Invalid Book",
+"price": -10,
+"stock": 5
+}
+
+### GET ALL BOOKS
+GET {{baseUrl}}/Books
+
+### GET BOOKS WITH FILTER (price > 300)
+GET {{baseUrl}}/Books?$filter=price gt 300
+
+### SELECT SPECIFIC FIELDS
+GET {{baseUrl}}/Books?$select=title,price,stock
+
+### EXPAND AUTHOR
+GET {{baseUrl}}/Books?$expand=author
+
+### EXPAND AUTHOR
+GET {{baseUrl}}/$metadata
+
+### UPDATE BOOK (PATCH)
+PATCH {{baseUrl}}/Books(28606269-f8a8-404d-bf39-5905f02cf455)
+Content-Type: application/json
+
+{
+"title": "title_11",
+"price": -1
+}
+
+### DELETE BOOK
+DELETE {{baseUrl}}/Books(28606270-41a9-433d-8957-895b4af90a48)
+
+### BOUND ACTION - RESTOCK
+POST {{baseUrl}}/Books(28606269-f8a8-404d-bf39-5905f02cf455)/CatService.restock
+Content-Type: application/json
+
+{
+"quantity": 5
+}
+
+### BOUND ACTION - APPLY DISCOUNT
+POST {{baseUrl}}/Books(e5c83610-04d9-4e0d-8ad2-d86db7f966fb)/LibraryService.applyDiscount
+Content-Type: application/json
+
+{
+"percentage": 10
+}
+
+### UNBOUND ACTION - RESET ALL STOCK
+POST {{baseUrl}}/resetAllStock
+
+## FUNCTION - GET TOTAL BOOKS
+GET {{baseUrl}}/getTotalBooks()
+
+### FUNCTION - GET EXPENSIVE BOOKS
+GET {{baseUrl}}/getExpensiveBooks()
+
+### FUNCTION - GROUP BY GENRE
+GET {{baseUrl}}/getBookCountByGenre()
+
+### VIEW - BooksView
+GET {{baseUrl}}/BooksWithAuthor
+
+### JOIN VIEW TEST
+GET {{baseUrl}}/BooksWithAuthor?$select=title,authorName,price
+
+### NEGATIVE TEST - STOCK < 0
+PATCH {{baseUrl}}/Books(<PUT_BOOK_ID_HERE>)
+Content-Type: application/json
+
+{
+"stock": -5
+}

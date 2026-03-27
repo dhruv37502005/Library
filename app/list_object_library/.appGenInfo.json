@@ -1,0 +1,32 @@
+{
+  "generationParameters": {
+    "generationDate": "Mon Feb 16 2026 12:41:39 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "Local CAP",
+    "metadataFilename": "",
+    "serviceUrl": "http://localhost:4004/odata/v4/cat/",
+    "appName": "list_object_library",
+    "appTitle": "List Object",
+    "appDescription": "An SAP Fiori List Object application.",
+    "appNamespace": "com.dhruv",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.144.1",
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.20.2",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "Authors"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "books"
+      }
+    ],
+    "launchText": "To launch the generated app, start your CAP project:  and navigate to the following location in your browser:\n\nhttp://localhost:4004/list_object_library/webapp/index.html"
+  }
+}
