@@ -140,4 +140,14 @@ entity BooksWithAuthor as select from Books {
     author.name as authorName
 };
 
-
+entity Discounts : cuid, managed {
+    // We use an Association to link the discount to a specific book
+    book       : Association to Books; 
+    
+    // Percentage can be a Decimal (e.g., 15.50 for 15.5%)
+    percentage : Decimal(5, 2); 
+    
+    // Professional touch: Add validity dates
+    startDate  : Date;
+    endDate    : Date;
+}
