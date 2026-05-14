@@ -83,7 +83,7 @@ Content-Type: application/json
 ### UNBOUND ACTION - RESET ALL STOCK
 POST {{baseUrl}}/resetAllStock
 
-## FUNCTION - GET TOTAL BOOKS
+### FUNCTION - GET TOTAL BOOKS
 GET {{baseUrl}}/getTotalBooks()
 
 ### FUNCTION - GET EXPENSIVE BOOKS
