@@ -32,3 +32,14 @@ mta_archives/
 
 # @cap-js/cds-typer
 @cds-models
+
+cat << 'EOF' > /home/user/projects/YOUR_PROJECT/.gitignore
+node_modules/
+gen/
+.env
+*.db
+*.sqlite
+dist/
+.vscode/
+mta_archives/
+EOF
