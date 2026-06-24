@@ -2,34 +2,28 @@ using CatService as service from './cat-service';
 
 //////////////////////////////////////////////////////////////
 // AUTHORS — LIST REPORT CONFIGURATION
-// Controls the first page table + filter bar
 //////////////////////////////////////////////////////////////
 
 annotate service.Authors with @(
 
-    // Enables global search bar
-    Search.searchable : true,
+    Search.searchable           : true,
     Search.defaultSearchElement : name,
 
-    // Filter bar fields
     UI.SelectionFields : [
         name,
         country
     ],
 
-    // Page title
     UI.HeaderInfo : {
         TypeName : 'Author',
-        Title : { Value : name }
+        Title    : { Value : name }
     },
 
-    // Table columns in list page   
     UI.LineItem : [
-        { Value: name },
+        { Value: name    },
         { Value: country }
     ],
 
-    // Default sorting
     UI.PresentationVariant : {
         SortOrder : [
             { Property : name, Descending : false }
@@ -38,35 +32,41 @@ annotate service.Authors with @(
 );
 
 //////////////////////////////////////////////////////////////
-// AUTHORS — OBJECT PAGE STRUCTURE
-// Defines sections inside Author details screen
+// AUTHORS — OBJECT PAGE + IDENTIFICATION (fixes Author tab)
 //////////////////////////////////////////////////////////////
 
 annotate service.Authors with @(
 
+    // ✅ THIS IS THE FIX — author/@UI.Identification now resolves
+    UI.Identification : [
+        { Value: name            },
+        { Value: country         },
+        { Value: businessId      },
+        { Value: address_street  },
+        { Value: address_city    },
+        { Value: address_zipCode }
+    ],
+
     UI.Facets : [
         {
-            // Form section
             $Type  : 'UI.ReferenceFacet',
             Label  : 'General Information',
             Target : '@UI.FieldGroup#General'
         },
         {
-            // Child table section
             $Type  : 'UI.ReferenceFacet',
             Label  : 'Books',
             Target : 'books/@UI.LineItem'
         }
     ],
 
-    // Form fields layout
     UI.FieldGroup #General : {
         Data : [
-            { Value: name },
-            { Value: country },
-            { Value: businessId },
-            { Value: address_street },
-            { Value: address_city },
+            { Value: name            },
+            { Value: country         },
+            { Value: businessId      },
+            { Value: address_street  },
+            { Value: address_city    },
             { Value: address_zipCode }
         ]
     }
@@ -74,19 +74,15 @@ annotate service.Authors with @(
 
 //////////////////////////////////////////////////////////////
 // AUTHORS — FIELD LABELS + VALUE HELP
-// Improves readability and filter usability
 //////////////////////////////////////////////////////////////
 
 annotate service.Authors with {
-
-
-    // Dropdown suggestion for country filter
     country @Common.ValueList : {
-        $Type : 'Common.ValueListType',
+        $Type          : 'Common.ValueListType',
         CollectionPath : 'Authors',
-        Parameters : [
+        Parameters     : [
             {
-                $Type : 'Common.ValueListParameterInOut',
+                $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : country,
                 ValueListProperty : country
             }
@@ -100,51 +96,46 @@ annotate service.Authors with {
 
 annotate service.Books with @(
 
-    // Book detail page sections
     UI.Facets : [
         {
             $Type  : 'UI.ReferenceFacet',
             Label  : 'General Information',
-            Target : '@UI.Identification'
+            Target : '@UI.Identification'        // ✅ Books own @UI.Identification
         },
         {
             $Type  : 'UI.ReferenceFacet',
             Label  : 'Author',
-            Target : 'author/@UI.Identification'
+            Target : 'author/@UI.Identification' // ✅ Now resolves — Authors has it
         }
     ],
 
-    // Book page header
     UI.HeaderInfo : {
         TypeName       : 'Book',
         TypeNamePlural : 'Books',
-        Title          : { Value : title },
+        Title          : { Value : title       },
         Description    : { Value : author.name }
     },
 
-    // Books table inside Author page
     UI.LineItem : [
-        { Value: title },
+        { Value: title,       Label: 'Title'  },
         { Value: author.name, Label: 'Author' },
-        { Value: genre },
-        { Value: price },
-        { Value: stock },
-        { Value: status }
+        { Value: genre,       Label: 'Genre'  },
+        { Value: price,       Label: 'Price'  },
+        { Value: stock,       Label: 'Stock'  },
+        { Value: status,      Label: 'Status' }
     ],
 
-    // Book detail fields
     UI.Identification : [
-        { Value: title },
-        { Value: description },
-        { Value: publishedAt },
+        { Value: title        },
+        { Value: description  },
+        { Value: publishedAt  },
         { Value: availability },
-        { Value: genre },
-        { Value: price },
-        { Value: stock },
-        { Value: status }
+        { Value: genre        },
+        { Value: price        },
+        { Value: stock        },
+        { Value: status       }
     ],
 
-    // Status indicator
     UI.DataPoint #Availability : {
         Value : availability
     }
@@ -156,48 +147,46 @@ annotate service.Books with @(
 
 annotate service.Books with @(
     UI.Chart : {
-        ChartType : #Column,
+        ChartType  : #Column,
         Dimensions : [ genre ],
-        Measures : [ stock ]
+        Measures   : [ stock ]
     }
 );
 
 //////////////////////////////////////////////////////////////
-// BOOKS — ACTION BUTTONS (OBJECT PAGE TOOLBAR)
+// BOOKS — ACTION BUTTONS
 //////////////////////////////////////////////////////////////
 
 annotate service.Books actions {
-
     restock @(
         UI.DataFieldForAction : {
-            Label : 'Restock',
+            Label  : 'Restock',
             Action : 'CatService.restock'
         }
     );
-
     applyDiscount @(
         UI.DataFieldForAction : {
-            Label : 'Apply Discount',
+            Label  : 'Apply Discount',
             Action : 'CatService.applyDiscount'
         }
     );
 };
 
 //////////////////////////////////////////////////////////////
-// BOOKS — VALUE HELP (AUTHOR SELECTION DURING CREATE)
+// BOOKS — VALUE HELP (AUTHOR SELECTION)
 //////////////////////////////////////////////////////////////
 
 annotate service.Books with {
     author_ID @Common.ValueList : {
         CollectionPath : 'Authors',
-        Parameters : [
+        Parameters     : [
             {
-                $Type : 'Common.ValueListParameterInOut',
+                $Type             : 'Common.ValueListParameterInOut',
                 LocalDataProperty : author_ID,
                 ValueListProperty : ID
             },
             {
-                $Type : 'Common.ValueListParameterDisplayOnly',
+                $Type             : 'Common.ValueListParameterDisplayOnly',
                 ValueListProperty : name
             }
         ]

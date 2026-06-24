@@ -3,7 +3,7 @@ namespace smart.library;
 using {
     cuid,
     managed
-} from '@sap/cds/common';
+} from '@sap/cds/common';   
 
 
 //---Authors---
