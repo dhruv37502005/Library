@@ -17,10 +17,18 @@
   },
   "scripts": {
     "start": "cds-serve",
+    "watch": "cds watch",
+    "watch:hybrid": "cds watch --profile hybrid",
     "watch-list_object_library": "cds watch --open com.dhruv.listobjectlibrary/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "undeploy": "cf undeploy Library --delete-services --delete-service-keys --delete-service-brokers",
+    "debug": "cds watch --debug",
+    "debug:break": "cds watch --debug-brk",
+    "debug:hybrid": "cds watch --profile hybrid --debug",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
-    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "undeploy": "cf undeploy Library --delete-services --delete-service-keys --delete-service-brokers",
+    "watch-loan-management": "cds watch --open loanmanagement/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-library-overview": "cds watch --open com.dhruv.libraryoverview/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-library-analytics": "cds watch --open com.dhruv.libraryanalytics/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "cds": {
@@ -35,6 +43,9 @@
     "app/*"
   ],
   "sapux": [
-    "app/list_object_library"
+    "app/list_object_library",
+    "app/loan-management",
+    "app/library-overview",
+    "app/library-analytics"
   ]
 }

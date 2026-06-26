@@ -126,15 +126,33 @@ annotate service.Books with @(
     ],
 
     UI.Identification : [
-        { Value: title        },
-        { Value: description  },
-        { Value: publishedAt  },
-        { Value: availability },
-        { Value: genre        },
-        { Value: price        },
-        { Value: stock        },
-        { Value: status       }
-    ],
+    // ─── Action buttons rendered in Object Page header toolbar ───
+    // $Type 'DataFieldForAction' tells Fiori Elements: this is not a data
+    // field, it's a button that invokes the named bound action.
+    // Fiori auto-generates a dialog from the action's parameter signature
+    // (percentage, startDate, endDate) — no manual form needed.
+    {
+        $Type  : 'UI.DataFieldForAction',
+        Label  : 'Apply Discount',
+        Action : 'CatService.applyDiscount'
+    },
+    {
+        $Type  : 'UI.DataFieldForAction',
+        Label  : 'Restock',
+        Action : 'CatService.restock'
+    },
+
+    // ─── Data fields (rendered as labeled values in General Info group) ───
+    { Value: title          },
+    { Value: description    },
+    { Value: publishedAt    },
+    { Value: availability   },
+    { Value: genre          },
+    { Value: price,          Label: 'Base Price'      },
+    { Value: effectivePrice, Label: 'Effective Price' },
+    { Value: stock          },
+    { Value: status         }
+],
 
     UI.DataPoint #Availability : {
         Value : availability
@@ -172,23 +190,3 @@ annotate service.Books actions {
     );
 };
 
-//////////////////////////////////////////////////////////////
-// BOOKS — VALUE HELP (AUTHOR SELECTION)
-//////////////////////////////////////////////////////////////
-
-annotate service.Books with {
-    author_ID @Common.ValueList : {
-        CollectionPath : 'Authors',
-        Parameters     : [
-            {
-                $Type             : 'Common.ValueListParameterInOut',
-                LocalDataProperty : author_ID,
-                ValueListProperty : ID
-            },
-            {
-                $Type             : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : name
-            }
-        ]
-    };
-};

@@ -1,0 +1,4 @@
+ID,createdAt,createdBy,modifiedAt,modifiedBy,name,email,joinDate,membershipType
+99999999-0000-0000-0000-000000000001,2026-01-15T10:00:00Z,admin,2026-01-15T10:00:00Z,admin,Alice Sharma,alice.sharma@example.com,2026-01-15,PREMIUM
+99999999-0000-0000-0000-000000000002,2026-02-20T11:00:00Z,admin,2026-02-20T11:00:00Z,admin,Rahul Verma,rahul.verma@example.com,2026-02-20,STANDARD
+99999999-0000-0000-0000-000000000003,2026-03-10T09:30:00Z,admin,2026-03-10T09:30:00Z,admin,Priya Iyer,priya.iyer@example.com,2026-03-10,STUDENT

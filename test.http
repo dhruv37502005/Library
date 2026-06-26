@@ -1,107 +1,363 @@
+# ═══════════════════════════════════════════════════════════════
+# Library CAP Service — REST test suite
+#
+# Entity IDs below are sourced from db/data/*.csv seed files.
+# As long as you don't change those CSVs, these IDs persist across
+# every `cds deploy` / trial reset — meaning these tests are
+# repeatable without manual ID juggling.
+#
+# Convention:
+#   - Variables prefixed by entity (e.g. @bookSapiens)
+#   - Each section: Read all → Read one → Create → Update → Delete
+#   - Negative tests grouped at the bottom
+# ═══════════════════════════════════════════════════════════════
 
 @baseUrl = http://localhost:4004/odata/v4/cat
 
-### CREATE AUTHOR
+# ─── Seed IDs (from CSV — survive every cds deploy) ───
+@authorOrwell      = 11111111-0000-0000-0000-000000000001
+@authorHarari      = 11111111-0000-0000-0000-000000000002
+@authorChristie    = 11111111-0000-0000-0000-000000000003
+
+@book1984          = 33333333-0000-0000-0000-000000000001
+@bookSapiens       = 33333333-0000-0000-0000-000000000002
+@bookOrient        = 33333333-0000-0000-0000-000000000003
+
+@profileOrwell     = 22222222-0000-0000-0000-000000000001
+
+@catFiction        = 55555555-0000-0000-0000-000000000001
+@catNonFiction     = 55555555-0000-0000-0000-000000000002
+@catMystery        = 55555555-0000-0000-0000-000000000003
+
+@bookCatLink1      = 66666666-0000-0000-0000-000000000001
+@bookTag1          = 44444444-0000-0000-0000-000000000001
+@discount1         = 77777777-0000-0000-0000-000000000001
+
+
+# ═══════════════════════════════════════════════════════════════
+# AUTHORS — CRUD
+# ═══════════════════════════════════════════════════════════════
+
+### Read all
+GET {{baseUrl}}/Authors
+
+### Read one
+GET {{baseUrl}}/Authors({{authorOrwell}})
+
+### Read with $expand — pulls nested books + profile in one call
+GET {{baseUrl}}/Authors({{authorOrwell}})?$expand=books,profile
+
+### Create — businessId is unique-constrained at DB level
 POST {{baseUrl}}/Authors
 Content-Type: application/json
 
 {
   "name": "J.K. Rowling",
-  "country": "UK",
-  "businessId": "AUTH001",
+  "country": "United Kingdom",
+  "businessId": "BIZ-ROW-004",
   "address_street": "King Street",
   "address_city": "London",
   "address_zipCode": "SW1A1AA"
 }
 
-### CREATE BOOK (VALID)
-POST {{baseUrl}}/Books
+### Update — PATCH only sends changed fields
+PATCH {{baseUrl}}/Authors({{authorOrwell}})
 Content-Type: application/json
 
-{
-"title": "Harry Potter",
-"price": 500,
-"stock": 10,
-"genre": "Fantasy",
-"author": "79c9df20-fb6c-4b9e-9211-08f12876a854"
-}
+{ "country": "England" }
+
+### Delete — uncomment with a non-seed ID; deleting seed breaks other tests
+# DELETE {{baseUrl}}/Authors(<paste-new-id-here>)
 
 
-### NEGATIVE TEST - PRICE < 0 (Should Fail)
-POST {{baseUrl}}/Books
-Content-Type: application/json
+# ═══════════════════════════════════════════════════════════════
+# BOOKS — CRUD
+# ═══════════════════════════════════════════════════════════════
 
-{
-"title": "Invalid Book",
-"price": -10,
-"stock": 5
-}
-
-### GET ALL BOOKS
+### Read all
 GET {{baseUrl}}/Books
 
-### GET BOOKS WITH FILTER (price > 300)
+### Read one
+GET {{baseUrl}}/Books({{book1984}})
+
+### Filter by price
 GET {{baseUrl}}/Books?$filter=price gt 300
 
-### SELECT SPECIFIC FIELDS
-GET {{baseUrl}}/Books?$select=title,price,stock
+### Select projection — only specific fields returned
+GET {{baseUrl}}/Books?$select=title,price,stock,availability
 
-### EXPAND AUTHOR
-GET {{baseUrl}}/Books?$expand=author
+### Multi-level $expand — author + categories (via junction) + tags
+GET {{baseUrl}}/Books({{book1984}})?$expand=author,categories,tags
 
-### EXPAND AUTHOR
-GET {{baseUrl}}/$metadata
-
-### UPDATE BOOK (PATCH)
-PATCH {{baseUrl}}/Books(28606269-f8a8-404d-bf39-5905f02cf455)
+### Create — note: FK field is `author_ID`, not `author`
+POST {{baseUrl}}/Books
 Content-Type: application/json
 
 {
-"title": "title_11",
-"price": -1
+  "title": "Harry Potter",
+  "price": 500,
+  "stock": 10,
+  "genre": "Fantasy",
+  "author_ID": "{{authorOrwell}}"
 }
 
-### DELETE BOOK
-DELETE {{baseUrl}}/Books(28606270-41a9-433d-8957-895b4af90a48)
+### Update
+PATCH {{baseUrl}}/Books({{book1984}})
+Content-Type: application/json
 
-### BOUND ACTION - RESTOCK
-POST {{baseUrl}}/Books(28606269-f8a8-404d-bf39-5905f02cf455)/CatService.restock
+{ "title": "1984 (Revised Edition)" }
+
+### Delete — uncomment with a non-seed ID
+# DELETE {{baseUrl}}/Books(<paste-new-id-here>)
+
+
+# ═══════════════════════════════════════════════════════════════
+# PROFILES — CRUD
+# ═══════════════════════════════════════════════════════════════
+
+### Read all
+GET {{baseUrl}}/Profiles
+
+### Read one with author expand
+GET {{baseUrl}}/Profiles({{profileOrwell}})?$expand=author
+
+### Create
+POST {{baseUrl}}/Profiles
 Content-Type: application/json
 
 {
-"quantity": 5
+  "bio": "Newly added author profile.",
+  "website": "https://example.com",
+  "author_ID": "{{authorChristie}}"
 }
 
-### BOUND ACTION - APPLY DISCOUNT
-POST {{baseUrl}}/Books(e5c83610-04d9-4e0d-8ad2-d86db7f966fb)/LibraryService.applyDiscount
+### Update
+PATCH {{baseUrl}}/Profiles({{profileOrwell}})
+Content-Type: application/json
+
+{ "website": "https://www.orwell-archive.org" }
+
+### Delete
+# DELETE {{baseUrl}}/Profiles(<paste-new-id-here>)
+
+
+# ═══════════════════════════════════════════════════════════════
+# CATEGORIES — CRUD
+# ═══════════════════════════════════════════════════════════════
+
+### Read all
+GET {{baseUrl}}/Categories
+
+### Read with junction expand — shows linked books
+GET {{baseUrl}}/Categories({{catFiction}})?$expand=links
+
+### Create
+POST {{baseUrl}}/Categories
+Content-Type: application/json
+
+{ "name": "Sci-Fi" }
+
+### Update
+PATCH {{baseUrl}}/Categories({{catFiction}})
+Content-Type: application/json
+
+{ "name": "Fiction (General)" }
+
+### Delete
+# DELETE {{baseUrl}}/Categories(<paste-new-id-here>)
+
+
+# ═══════════════════════════════════════════════════════════════
+# BOOK CATEGORIES (junction) — CRUD
+#
+# This is a many-to-many link table. Creating a row here associates
+# an existing Book with an existing Category.
+# ═══════════════════════════════════════════════════════════════
+
+### Read all
+GET {{baseUrl}}/BookCategories
+
+### Read with both sides expanded
+GET {{baseUrl}}/BookCategories?$expand=book,category
+
+### Create — link 1984 to Non-Fiction (for testing purposes)
+POST {{baseUrl}}/BookCategories
 Content-Type: application/json
 
 {
-"percentage": 10
+  "book_ID": "{{book1984}}",
+  "category_ID": "{{catNonFiction}}"
 }
 
-### UNBOUND ACTION - RESET ALL STOCK
-POST {{baseUrl}}/resetAllStock
+### Delete
+# DELETE {{baseUrl}}/BookCategories(<paste-new-id-here>)
 
-### FUNCTION - GET TOTAL BOOKS
-GET {{baseUrl}}/getTotalBooks()
 
-### FUNCTION - GET EXPENSIVE BOOKS
-GET {{baseUrl}}/getExpensiveBooks()
+# ═══════════════════════════════════════════════════════════════
+# BOOK TAGS — CRUD
+#
+# Tags are flat strings (no separate Tag entity), so this is
+# effectively a one-to-many: Book → many tag rows.
+# ═══════════════════════════════════════════════════════════════
 
-### FUNCTION - GROUP BY GENRE
-GET {{baseUrl}}/getBookCountByGenre()
+### Read all
+GET {{baseUrl}}/BookTags
 
-### VIEW - BooksView
+### Read with book expand
+GET {{baseUrl}}/BookTags?$expand=book
+
+### Create
+POST {{baseUrl}}/BookTags
+Content-Type: application/json
+
+{
+  "book_ID": "{{book1984}}",
+  "tag": "totalitarian"
+}
+
+### Update — rename a tag
+PATCH {{baseUrl}}/BookTags({{bookTag1}})
+Content-Type: application/json
+
+{ "tag": "dystopian-classic" }
+
+### Delete
+# DELETE {{baseUrl}}/BookTags(<paste-new-id-here>)
+
+
+# ═══════════════════════════════════════════════════════════════
+# DISCOUNTS — CRUD
+#
+# Direct CRUD is supported, but the *preferred* way to create
+# discounts is via the applyDiscount bound action below — it
+# validates dates and book existence.
+# ═══════════════════════════════════════════════════════════════
+
+### Read all
+GET {{baseUrl}}/Discounts
+
+### Read with book expand
+GET {{baseUrl}}/Discounts?$expand=book
+
+### Create (manual — skips action validation)
+POST {{baseUrl}}/Discounts
+Content-Type: application/json
+
+{
+  "book_ID": "{{bookSapiens}}",
+  "percentage": 20,
+  "startDate": "2026-07-01",
+  "endDate": "2026-07-31"
+}
+
+### Update
+PATCH {{baseUrl}}/Discounts({{discount1}})
+Content-Type: application/json
+
+{ "percentage": 18 }
+
+### Delete
+# DELETE {{baseUrl}}/Discounts(<paste-new-id-here>)
+
+
+# ═══════════════════════════════════════════════════════════════
+# VIEWS
+# ═══════════════════════════════════════════════════════════════
+
+### CDS view — joins Books with Author name
 GET {{baseUrl}}/BooksWithAuthor
 
-### JOIN VIEW TEST
+### Same view with column projection
 GET {{baseUrl}}/BooksWithAuthor?$select=title,authorName,price
 
-### NEGATIVE TEST - STOCK < 0
-PATCH {{baseUrl}}/Books(<PUT_BOOK_ID_HERE>)
+
+# ═══════════════════════════════════════════════════════════════
+# ACTIONS
+# ═══════════════════════════════════════════════════════════════
+
+### Bound — restock (increases stock by quantity)
+POST {{baseUrl}}/Books({{book1984}})/CatService.restock
+Content-Type: application/json
+
+{ "quantity": 5 }
+
+### Bound — applyDiscount (creates Discount row; does NOT mutate Books.price)
+POST {{baseUrl}}/Books({{book1984}})/CatService.applyDiscount
 Content-Type: application/json
 
 {
-"stock": -5
+  "percentage": 15,
+  "startDate": "2026-07-01",
+  "endDate": "2026-07-31"
 }
+
+### Unbound — reset all stock to zero (admin-style operation)
+POST {{baseUrl}}/resetAllStock
+
+
+# ═══════════════════════════════════════════════════════════════
+# FUNCTIONS (read-only, GET-able)
+# ═══════════════════════════════════════════════════════════════
+
+GET {{baseUrl}}/getTotalBooks()
+GET {{baseUrl}}/getExpensiveBooks()
+GET {{baseUrl}}/getBookCountByGenre()
+
+
+# ═══════════════════════════════════════════════════════════════
+# METADATA — full OData service description
+# ═══════════════════════════════════════════════════════════════
+
+GET {{baseUrl}}/$metadata
+
+
+# ═══════════════════════════════════════════════════════════════
+# NEGATIVE TESTS — should fail with 400
+# ═══════════════════════════════════════════════════════════════
+
+### Price < 0 on create
+POST {{baseUrl}}/Books
+Content-Type: application/json
+
+{ "title": "Invalid Book", "price": -10, "stock": 5 }
+
+### Stock < 0 on patch
+PATCH {{baseUrl}}/Books({{book1984}})
+Content-Type: application/json
+
+{ "stock": -5 }
+
+### Discount > 50%
+POST {{baseUrl}}/Books({{book1984}})/CatService.applyDiscount
+Content-Type: application/json
+
+{ "percentage": 75, "startDate": "2026-07-01", "endDate": "2026-07-31" }
+
+### Discount endDate before startDate
+POST {{baseUrl}}/Books({{book1984}})/CatService.applyDiscount
+Content-Type: application/json
+
+{ "percentage": 10, "startDate": "2026-08-01", "endDate": "2026-07-31" }
+
+### Restock with negative quantity
+# Note: current handler does NOT validate this — issue tracked in clipboard (SV3).
+# Will be fixed in a later session.
+POST {{baseUrl}}/Books({{book1984}})/CatService.restock
+Content-Type: application/json
+
+{ "quantity": -3 }
+
+### Before: should show effectivePrice == price (no active discount)
+GET {{baseUrl}}/Books({{book1984}})
+
+### Apply a discount that's active today
+POST {{baseUrl}}/Books({{book1984}})/CatService.applyDiscount
+Content-Type: application/json
+
+{ "percentage": 15, "startDate": "2026-06-01", "endDate": "2026-12-31" }
+
+### After: effectivePrice should now be 499.00 × 0.85 = 424.15
+GET {{baseUrl}}/Books({{book1984}})
+
+###
+GET {{baseUrl}}/Books(33333333-0000-0000-0000-000000000001)

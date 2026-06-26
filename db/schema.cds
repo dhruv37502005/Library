@@ -151,3 +151,116 @@ entity Discounts : cuid, managed {
     startDate  : Date;
     endDate    : Date;
 }
+
+
+// ─────────────────────────────────────────────────────────────
+// LENDING CONTEXT — Book borrowing/return tracking
+// Added to demonstrate domain extension and to give Joule a
+// CAP service to scaffold a 2nd Fiori app on top of.
+// ─────────────────────────────────────────────────────────────
+context Lending {
+
+    // Members of the library who can borrow books.
+    entity Members : cuid, managed {
+        name           : String(100);
+        email          : String(100) @unique;
+        joinDate       : Date;
+        membershipType : String(20) enum {
+            STANDARD;
+            PREMIUM;
+            STUDENT;
+        } default 'STANDARD';
+
+        // Backreference — all loans by this member.
+        loans : Association to many Loans on loans.member = $self;
+    }
+
+    // A single borrow record — links a Book to a Member with dates.
+    // returnDate = null means the book is still out.
+    entity Loans : cuid, managed {
+        book       : Association to Books;
+        member     : Association to Members;
+        borrowDate : Date;
+        dueDate    : Date;
+        returnDate : Date;  // null until returned
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// AGGREGATION SUPPORT FOR ANALYTICAL LIST PAGE (ALP)
+// 
+// ALP requires entity-set-level annotations declaring which
+// properties are dimensions (grouping) vs measures (numeric).
+// Without these, ALP wizard rejects the entity as "not analytical".
+//
+// @Aggregation.ApplySupported       — declares the entity supports $apply
+// @Analytics.AggregatedProperty     — defines a measure (numeric KPI)
+// @Common.Label                     — human-readable labels for chart axes
+// ─────────────────────────────────────────────────────────────
+annotate smart.library.Books with @(
+    Aggregation.ApplySupported : {
+        $Type                  : 'Aggregation.ApplySupportedType',
+        Transformations        : [
+            'aggregate',
+            'topcount',
+            'bottomcount',
+            'identity',
+            'concat',
+            'groupby',
+            'filter',
+            'expand',
+            'top',
+            'skip',
+            'orderby',
+            'search'
+        ],
+        Rollup                 : #None,
+        PropertyRestrictions   : true,
+        GroupableProperties    : [ genre, status, author_ID ],
+        AggregatableProperties : [
+            { Property: stock },
+            { Property: price }
+        ]
+    },
+
+    Analytics.AggregatedProperty #totalStock : {
+        $Type                : 'Analytics.AggregatedPropertyType',
+        Name                 : 'totalStock',
+        AggregatableProperty : stock,
+        AggregationMethod    : 'sum',
+        ![@Common.Label]     : 'Total Stock'
+    },
+
+    Analytics.AggregatedProperty #avgPrice : {
+        $Type                : 'Analytics.AggregatedPropertyType',
+        Name                 : 'avgPrice',
+        AggregatableProperty : price,
+        AggregationMethod    : 'average',
+        ![@Common.Label]     : 'Average Price'
+    },
+
+    Analytics.AggregatedProperty #bookCount : {
+        $Type                : 'Analytics.AggregatedPropertyType',
+        Name                 : 'bookCount',
+        AggregatableProperty : ID,
+        AggregationMethod    : 'countdistinct',
+        ![@Common.Label]     : 'Book Count'
+    }
+) {
+    // Mark dimensions — these are the "group by" axes for charts
+    @Common.Label : 'Genre'
+    genre @Analytics.Dimension : true;
+
+    @Common.Label : 'Status'
+    status @Analytics.Dimension : true;
+
+    @Common.Label : 'Author'
+    author @Analytics.Dimension : true;
+
+    // Mark measures — numeric values that can be summed/averaged
+    @Common.Label : 'Stock'
+    stock @Analytics.Measure : true @Aggregation.default : #SUM;
+
+    @Common.Label : 'Price'
+    price @Analytics.Measure : true @Aggregation.default : #AVG;
+};
