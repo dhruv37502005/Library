@@ -46,7 +46,7 @@ service CatService {
 
             // Restock — increases stock by `quantity`.
             // Validation that quantity > 0 lives in the JS handler.
-            action restock(quantity : Integer);
+            action restock(quantity : Integer) returns Books;
 
             // Apply Discount — inserts a row into Discounts entity.
             // Does NOT mutate Books.price (that stays as the canonical base price).

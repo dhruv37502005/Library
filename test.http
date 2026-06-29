@@ -361,3 +361,12 @@ GET {{baseUrl}}/Books({{book1984}})
 
 ###
 GET {{baseUrl}}/Books(33333333-0000-0000-0000-000000000001)
+
+###
+POST {{baseUrl}}/Books({{book1984}})/CatService.applyDiscount
+Content-Type: application/json
+
+{ "percentage": 15, "startDate": "2026-06-01", "endDate": "2026-12-31" }
+
+###
+GET {{baseUrl}}/Books({{book1984}})

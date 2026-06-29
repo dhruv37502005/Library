@@ -19,32 +19,6 @@ modules:
     instances: 1
   build-parameters:
     builder: npm-ci
-- name: Library
-  type: approuter.nodejs
-  path: app/router
-  requires:
-  - name: srv-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: srv-api
-      url: ~{srv-url}
-  - name: Library-auth
-  - name: Library-destination-service
-    group: destinations
-    properties:
-      forwardAuthToken: false
-      name: ui5
-      url: https://ui5.sap.com
-  provides:
-  - name: app-api
-    properties:
-      app-protocol: ${protocol}
-      app-uri: ${default-uri}
-  parameters:
-    disk-quota: 256M
-    keep-existing-routes: true
-    memory: 256M
 - name: Library-db-deployer
   type: hdb
   path: gen/db
@@ -73,6 +47,10 @@ modules:
     - artifacts:
       - comdhruvlibraryanalytics.zip
       name: comdhruvlibraryanalytics
+      target-path: resources/
+    - artifacts:
+      - comdhruvloanmanagement.zip
+      name: comdhruvloanmanagement
       target-path: resources/
 - name: comdhruvlistobjectlibrary
   type: html5
@@ -104,24 +82,26 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: comdhruvloanmanagement
+  type: html5
+  path: app/loan-management
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: Library-auth
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      oauth2-configuration:
-        credential-types:
-        - binding-secret
-        - x509
-        redirect-uris:
-        - https://*~{app-api/app-uri}/**
       tenant-mode: dedicated
       xsappname: Library-${org}-${space}
     path: ./xs-security.json
     service: xsuaa
     service-plan: application
-  requires:
-  - name: app-api
 - name: Library-connectivity
   type: org.cloudfoundry.managed-service
   parameters:
