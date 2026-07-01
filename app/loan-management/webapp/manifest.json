@@ -24,7 +24,21 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+    "inbounds": {
+        "LoanManagement-display": {
+            "semanticObject": "LoanManagement",
+            "action": "display",
+            "title": "Loan Management",
+            "subTitle": "Track book borrowing and returns",
+            "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+            }
+        }
     }
+}
   },
   "sap.ui": {
     "technology": "UI5",

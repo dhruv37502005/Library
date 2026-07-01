@@ -66,6 +66,26 @@ service CatService {
     // "Unbound" = not tied to a specific entity instance.
     // Called as POST /resetAllStock (no entity key in URL).
     action   resetAllStock();
+    // ─── Lending domain actions (emit events for Notifications service) ───
+    //
+    // Both actions are UNBOUND (service-level, not tied to a specific Loan
+    // instance). Rationale:
+    //   - borrowBook creates a new Loan → nothing to bind to
+    //   - returnBook takes loan_ID as param for consistency
+    //
+    // Both actions emit a domain event (`BookBorrowed` / `BookReturned`)
+    // via cds.emit() after the DB write succeeds. The event travels
+    // through the CAP in-process Outbox to NotificationsService handlers.
+    //
+    // Both return the Loan entity so Fiori UIs auto-refresh on invocation.
+    action borrowBook(
+        book_ID   : UUID,
+        member_ID : UUID
+    ) returns Loans;
+
+    action returnBook(
+        loan_ID : UUID
+    ) returns Loans;
 
     // ─── Functions (read-only by OData spec) ───
     // Use `function` (not `action`) when the operation does not modify state.
@@ -83,4 +103,5 @@ service CatService {
     // ─── Lending domain entities (added for 2nd Fiori app) ───
     entity Members as projection on db.Lending.Members;
     entity Loans   as projection on db.Lending.Loans;
+    
 }

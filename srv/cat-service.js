@@ -1,7 +1,11 @@
+const cds = require('@sap/cds')
+const LOG = cds.log('cat-service')
+
 module.exports = cds.service.impl(async function () {
 
 
-  const { Books } = this.entities
+  // const { Books } = this.entities
+  const { Books, Discounts, Loans } = this.entities
 
   //  Validation Check Constraint
   this.before('CREATE', Books, (req) => {
@@ -214,5 +218,136 @@ module.exports = cds.service.impl(async function () {
     console.log(req.query)
   })
 
+
+  // ─────────────────────────────────────────────────────────────
+// ACTION: borrowBook
+//
+// 1. Validates book + member exist
+// 2. Verifies book is available (stock > 0)
+// 3. Creates a new Loan row (borrowDate=today, dueDate=today+14d)
+// 4. Decrements book stock by 1
+// 5. Emits BookBorrowed event via cds.emit() through the outbox
+// 6. Returns the created Loan (Fiori auto-refresh)
+// ─────────────────────────────────────────────────────────────
+this.on('borrowBook', async (req) => {
+    const { book_ID, member_ID } = req.data
+    const { Members } = this.entities
+
+    // Validation
+    if (!book_ID || !member_ID) {
+        return req.reject(400, 'Both book_ID and member_ID are required')
+    }
+
+    const book = await SELECT.one.from(Books).where({ ID: book_ID })
+    if (!book) return req.reject(404, `Book ${book_ID} not found`)
+
+    const member = await SELECT.one.from(Members).where({ ID: member_ID })
+    if (!member) return req.reject(404, `Member ${member_ID} not found`)
+
+    if (book.stock <= 0) {
+        return req.reject(400, `Book "${book.title}" is out of stock`)
+    }
+
+    // Compute dates. 14-day loan period is a domain rule; hard-coded here
+    // for simplicity. In a real system this would come from membershipType
+    // (STUDENT=7d, STANDARD=14d, PREMIUM=30d) — future enhancement.
+    const today   = new Date().toISOString().split('T')[0]
+    const dueDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
+                        .toISOString().split('T')[0]
+
+    // Generate the Loan ID upfront so we can return it AND include it
+    // in the emitted event payload (traceability).
+    const loanID = cds.utils.uuid()
+
+    // Insert Loan
+    await INSERT.into(Loans).entries({
+        ID         : loanID,
+        book_ID    : book_ID,
+        member_ID  : member_ID,
+        borrowDate : today,
+        dueDate    : dueDate
+    })
+
+    // Decrement stock
+    await UPDATE(Books).set({ stock: { '-=': 1 } }).where({ ID: book_ID })
+
+    // ─── Emit event ───
+    // The eventId is what NotificationsService uses for dedup.
+    // A separate UUID per event (not the loan ID) so re-borrowing the
+    // same book+member creates a distinct event.
+    await this.emit('BookBorrowed', {
+        eventId    : cds.utils.uuid(),
+        loan_ID    : loanID,
+        book_ID    : book_ID,
+        book_title : book.title,     // included for handler convenience
+        member_ID  : member_ID,
+        member_name: member.name,    // included for notification message
+        borrowDate : today,
+        dueDate    : dueDate,
+        emittedAt  : new Date().toISOString()
+    })
+
+    LOG.info(`📗 Book borrowed: ${book.title} by ${member.name} (loan ${loanID})`)
+
+    // Return the created Loan for UI auto-refresh
+    return await SELECT.one.from(Loans).where({ ID: loanID })
+})
+
+
+// ─────────────────────────────────────────────────────────────
+// ACTION: returnBook
+//
+// 1. Validates loan exists and is not already returned
+// 2. Sets returnDate = today
+// 3. Increments book stock by 1
+// 4. Emits BookReturned event (includes wasOverdue flag)
+// 5. Returns the updated Loan
+// ─────────────────────────────────────────────────────────────
+this.on('returnBook', async (req) => {
+    const { loan_ID } = req.data
+
+    if (!loan_ID) return req.reject(400, 'loan_ID is required')
+
+    const loan = await SELECT.one.from(Loans).where({ ID: loan_ID })
+    if (!loan) return req.reject(404, `Loan ${loan_ID} not found`)
+
+    if (loan.returnDate) {
+        return req.reject(400, `Loan ${loan_ID} was already returned on ${loan.returnDate}`)
+    }
+
+    const today = new Date().toISOString().split('T')[0]
+
+    // Compute whether the return is late — included in the event payload
+    // so the handler can craft a message like "returned 3 days late".
+    const wasOverdue = loan.dueDate && new Date(today) > new Date(loan.dueDate)
+
+    // Update Loan
+    await UPDATE(Loans).set({ returnDate: today }).where({ ID: loan_ID })
+
+    // Restore stock
+    await UPDATE(Books).set({ stock: { '+=': 1 } }).where({ ID: loan.book_ID })
+
+    // Fetch book + member for the event payload (Notifications needs names).
+    const book   = await SELECT.one.from(Books).where({ ID: loan.book_ID })
+    const { Members } = this.entities
+    const member = await SELECT.one.from(Members).where({ ID: loan.member_ID })
+
+    // ─── Emit event ───
+    await this.emit('BookReturned', {
+        eventId    : cds.utils.uuid(),
+        loan_ID    : loan_ID,
+        book_ID    : loan.book_ID,
+        book_title : book?.title || '(unknown)',
+        member_ID  : loan.member_ID,
+        member_name: member?.name || '(unknown)',
+        returnDate : today,
+        wasOverdue : wasOverdue,
+        emittedAt  : new Date().toISOString()
+    })
+
+    LOG.info(`📘 Book returned: ${book?.title} by ${member?.name}${wasOverdue ? ' (OVERDUE)' : ''}`)
+
+    return await SELECT.one.from(Loans).where({ ID: loan_ID })
+})
 
 })

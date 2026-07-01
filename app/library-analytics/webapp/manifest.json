@@ -24,7 +24,21 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+    "inbounds": {
+        "LibraryAnalytics-display": {
+            "semanticObject": "LibraryAnalytics",
+            "action": "display",
+            "title": "Library Analytics",
+            "subTitle": "Stock analytics and charts",
+            "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+            }
+        }
     }
+}
   },
   "sap.ui": {
     "technology": "UI5",

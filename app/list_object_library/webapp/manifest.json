@@ -31,6 +31,20 @@
       }
     }
   },
+"crossNavigation": {
+    "inbounds": {
+        "ListObjectLibrary-display": {
+            "semanticObject": "ListObjectLibrary",
+            "action": "display",
+            "title": "Books & Authors",
+            "subTitle": "Browse the library catalog",
+            "signature": {
+                "parameters": {},
+                "additionalParameters": "allowed"
+            }
+        }
+    }
+},
   "sap.ui": {
     "technology": "UI5",
     "icons": {

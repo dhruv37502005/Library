@@ -370,3 +370,112 @@ Content-Type: application/json
 
 ###
 GET {{baseUrl}}/Books({{book1984}})
+
+### ═══════════════════════════════════════════════════════════════
+### EVENT-DRIVEN FLOW — Notifications Sprint 1
+### ═══════════════════════════════════════════════════════════════
+
+@notifBaseUrl = http://localhost:4004/notifications
+
+
+### ─── Step 1: Baseline — see current state before any borrow ───
+
+# Should be empty or whatever's already been captured
+GET {{notifBaseUrl}}/RawEvents
+
+# Same
+GET {{notifBaseUrl}}/Notifications
+
+
+### ─── Step 2: Invoke borrowBook on Library ───
+
+# Alice (member 99999999-...-001) borrows 1984 (book 33333333-...-001)
+# Expect: 200 OK + new Loan returned
+POST {{baseUrl}}/borrowBook
+Content-Type: application/json
+
+{
+    "book_ID"  : "{{book1984}}",
+    "member_ID": "99999999-0000-0000-0000-000000000001"
+}
+
+# ⚠️ Wait — that's using the AUTHOR ID as member, wrong.
+# Use the actual member from your seed data. See below.
+
+
+### ─── Step 2 (corrected): use a real Member UUID ───
+
+# Alice Sharma = 99999999-0000-0000-0000-000000000001
+POST {{baseUrl}}/borrowBook
+Content-Type: application/json
+
+{
+    "book_ID"  : "{{book1984}}",
+    "member_ID": "99999999-0000-0000-0000-000000000001"
+}
+
+
+### ─── Step 3: Verify the event landed in RawEvents ───
+
+# Expect: 1 row with eventType=BookBorrowed, processedAt set
+GET {{notifBaseUrl}}/RawEvents
+
+
+### ─── Step 4: Verify fan-out Notifications rows ───
+
+# Expect: 2 rows — one MEMBER (Alice), one ADMIN
+GET {{notifBaseUrl}}/Notifications
+
+
+### ─── Step 5: Test idempotency ───
+
+# Call borrowBook again with the SAME borrow — but the eventId is
+# generated fresh each call in the emitter, so this creates a
+# NEW event (not a duplicate). Real dedup testing requires manual
+# INSERT of a duplicate eventId, or restarting cds watch mid-outbox.
+# This step just proves the second call works cleanly:
+POST {{baseUrl}}/borrowBook
+Content-Type: application/json
+
+{
+    "book_ID"  : "{{bookSapiens}}",
+    "member_ID": "99999999-0000-0000-0000-000000000002"
+}
+
+
+### ─── Step 6: Return a book ───
+
+# Find one of the loan IDs by looking at the earlier response,
+# or list loans:
+GET {{baseUrl}}/Loans
+
+### Then use one of those IDs (replace <loan_ID>):
+POST {{baseUrl}}/returnBook
+Content-Type: application/json
+
+{
+    "loan_ID": "4c7e0aa8-fac2-4c8e-b7c0-ab95e7142333"
+}
+
+
+### ─── Step 7: Verify BookReturned event fanned out ───
+
+GET {{notifBaseUrl}}/RawEvents
+
+###
+GET {{notifBaseUrl}}/Notifications
+
+
+### ─── Step 8: markAsRead action ───
+
+# Mark one of Alice's notifications as read
+# Replace <notification_ID> with one from the previous GET
+POST {{notifBaseUrl}}/Notifications(2ff0d492-ef9d-424b-acba-b4b991f976c6)/NotificationsService.markAsRead
+Content-Type: application/json
+
+{}
+
+
+### ─── Step 9: Verify isRead flipped ───
+
+GET {{notifBaseUrl}}/Notifications
