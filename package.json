@@ -28,7 +28,8 @@
     "undeploy": "cf undeploy Library --delete-services --delete-service-keys --delete-service-brokers",
     "watch-loan-management": "cds watch --open loanmanagement/index.html?sap-ui-xx-viewCache=false --livereload false",
     "watch-library-overview": "cds watch --open com.dhruv.libraryoverview/index.html?sap-ui-xx-viewCache=false --livereload false",
-    "watch-library-analytics": "cds watch --open com.dhruv.libraryanalytics/index.html?sap-ui-xx-viewCache=false --livereload false"
+    "watch-library-analytics": "cds watch --open com.dhruv.libraryanalytics/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "watch-notifications-ui": "cds watch --open com.dhruv.notificationsui/index.html?sap-ui-xx-viewCache=false --livereload false"
   },
   "private": true,
   "cds": {
@@ -46,6 +47,7 @@
     "app/list_object_library",
     "app/loan-management",
     "app/library-overview",
-    "app/library-analytics"
+    "app/library-analytics",
+    "app/notifications-ui"
   ]
 }

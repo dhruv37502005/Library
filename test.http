@@ -454,7 +454,7 @@ POST {{baseUrl}}/returnBook
 Content-Type: application/json
 
 {
-    "loan_ID": "4c7e0aa8-fac2-4c8e-b7c0-ab95e7142333"
+    "loan_ID": "28d5d45a-4920-461a-8b86-8b8bd29096ea"
 }
 
 
@@ -470,7 +470,7 @@ GET {{notifBaseUrl}}/Notifications
 
 # Mark one of Alice's notifications as read
 # Replace <notification_ID> with one from the previous GET
-POST {{notifBaseUrl}}/Notifications(2ff0d492-ef9d-424b-acba-b4b991f976c6)/NotificationsService.markAsRead
+POST {{notifBaseUrl}}/Notifications(0dc9ee40-6dea-480a-99a9-06bcb24a9c0a)/NotificationsService.markAsRead
 Content-Type: application/json
 
 {}

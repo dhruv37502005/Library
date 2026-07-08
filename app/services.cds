@@ -6,3 +6,5 @@ using from './loan-management/annotations';
 using from './library-overview/annotations';
 
 using from './library-analytics/annotations';
+
+using from './notifications-ui/annotations';

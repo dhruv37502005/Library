@@ -52,6 +52,10 @@ modules:
       - comdhruvloanmanagement.zip
       name: comdhruvloanmanagement
       target-path: resources/
+    - artifacts:
+      - comdhruvnotificationsui.zip
+      name: comdhruvnotificationsui
+      target-path: resources/
 - name: comdhruvlistobjectlibrary
   type: html5
   path: app/list_object_library
@@ -85,6 +89,16 @@ modules:
 - name: comdhruvloanmanagement
   type: html5
   path: app/loan-management
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comdhruvnotificationsui
+  type: html5
+  path: app/notifications-ui
   build-parameters:
     build-result: dist
     builder: custom
