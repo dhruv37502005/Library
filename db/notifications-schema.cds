@@ -30,6 +30,18 @@ context Notifications {
         ADMIN;
     }
 
+    // Delivery outcome per Notification row.
+    // PENDING = row just created, delivery not yet attempted (transient)
+    // SENT    = handler successfully handed off to SMTP transporter
+    // FAILED  = SMTP error; deliveryError populated
+    // SKIPPED = intentionally not sent (e.g., channel disabled per recipient)
+    type DeliveryStatus : String(10) enum {
+        PENDING;
+        SENT;
+        FAILED;
+        SKIPPED;
+    }
+
 
     // ─── Entity 1: RawEvents (immutable event log) ───
     //
@@ -106,5 +118,23 @@ context Notifications {
         // Read state — user marks it read via markAsRead action later.
         isRead        : Boolean default false;
         readAt        : Timestamp;
+        // ─── Delivery tracking (added for real email in Session ND1) ───
+        //
+        // Every fan-out row attempts email delivery. Status tracks the
+        // outcome per-row so:
+        //   - We can retry FAILED rows in a future session
+        //   - Admin dashboard can flag delivery failures
+        //   - Audit trail records what actually reached the recipient
+        //
+        // Default = PENDING because rows are created before the send
+        // attempt. Handlers flip it to SENT / FAILED immediately after.
+        deliveryStatus : DeliveryStatus default 'PENDING';
+
+        // Populated only when deliveryStatus = FAILED.
+        // Capped at 500 chars — SMTP errors can be long, we truncate.
+        deliveryError  : String(500);
+
+        // Set only on successful delivery. Null for PENDING / FAILED.
+        deliveredAt    : Timestamp;
     }
 }

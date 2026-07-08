@@ -6,7 +6,8 @@
     "@cap-js/hana": "^2",
     "@sap/cds": "^9",
     "@sap/xssec": "^4",
-    "express": "^4"
+    "express": "^4",
+    "nodemailer": "^9.0.3"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^2.2.0",
@@ -37,7 +38,16 @@
       "[production]": {
         "auth": "xsuaa"
       },
-      "connectivity": true
+      "connectivity": true,
+      "ans": {
+        "kind": "rest",
+        "credentials": {
+          "requestTimeout": 10000
+        },
+        "vcap": {
+          "label": "alert-notification"
+        }
+      }
     }
   },
   "workspaces": [

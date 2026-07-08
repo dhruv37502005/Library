@@ -126,6 +126,12 @@ resources:
   parameters:
     service: hana
     service-plan: hdi-shared
+- name: Library-ans
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service-name: Library-ANS
+    service-plan: standard
+    service: alert-notification
 - name: Library-repo-host
   type: org.cloudfoundry.managed-service
   parameters:

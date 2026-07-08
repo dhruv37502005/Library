@@ -479,3 +479,12 @@ Content-Type: application/json
 ### ─── Step 9: Verify isRead flipped ───
 
 GET {{notifBaseUrl}}/Notifications
+
+###
+POST {{baseUrl}}/borrowBook
+Content-Type: application/json
+
+{
+    "book_ID"  : "{{book1984}}",
+    "member_ID": "99999999-0000-0000-0000-000000000001"
+}
