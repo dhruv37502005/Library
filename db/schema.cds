@@ -79,6 +79,8 @@ availability : String = case
     publishedAt  : Date;
     lastSoldAt   : Timestamp;
     isActive     : Boolean default true;
+    // URL to the book's cover image (from Best Books Ever dataset).
+coverImageUrl : String(500);
 }
 
 entity BookTags : cuid {

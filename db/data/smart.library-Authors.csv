@@ -1,4 +1,593 @@
-ID,createdAt,createdBy,modifiedAt,modifiedBy,name,country,address_street,address_city,address_zipCode,businessId
-11111111-0000-0000-0000-000000000001,2024-01-10T08:00:00Z,admin,2024-01-10T08:00:00Z,admin,George Orwell,United Kingdom,50 Bookwell Lane,London,EC1A 1BB,BIZ-ORW-001
-11111111-0000-0000-0000-000000000002,2024-02-15T09:30:00Z,admin,2024-02-15T09:30:00Z,admin,Yuval Noah Harari,Israel,12 Olive Street,Jerusalem,91000,BIZ-HAR-002
-11111111-0000-0000-0000-000000000003,2024-03-20T11:00:00Z,admin,2024-03-20T11:00:00Z,admin,Agatha Christie,United Kingdom,7 Mystery Close,Devon,TQ1 2AB,BIZ-CHR-003
+ID,name,country,businessId
+54fd05e8-633c-4788-ac40-e9b3621c8a6c,A.A. Milne,,BIZ-BBE-0001
+9d1d9a84-aab6-405a-8d59-1f27d8735810,A.S. Byatt,,BIZ-BBE-0002
+bca2f589-8d54-4c41-bf05-4ec93f93e4f4,Abraham Verghese,,BIZ-BBE-0003
+5e2a30f7-13fa-47ae-8c44-3df1b30a6396,Agatha Christie,,BIZ-BBE-0004
+fb63e02d-f0e2-45b9-b4f4-e3d661acf95d,Aimee Cabo Nikolov,,BIZ-BBE-0005
+651696c4-8ed9-4257-84f9-aa2dfdc25854,Alan Moore,,BIZ-BBE-0006
+bd4f9842-d013-440e-8f3e-0ccb944db9fd,Alan Paton,,BIZ-BBE-0007
+abe3a5b0-576d-4f9c-908b-ac32df9a9665,Albert Camus,,BIZ-BBE-0008
+bb2070df-e859-4b17-8d86-619ab75dec34,Aldous Huxley,,BIZ-BBE-0009
+7fa7035e-61f4-45b0-9d06-23cbce1c38f5,Aleksandr Solzhenitsyn,,BIZ-BBE-0010
+6ca7c921-3649-42a5-8262-6e8fff41327c,Alex Flinn,,BIZ-BBE-0011
+ae0a283e-0203-4278-ac19-f2da73a1aebb,Alex Haley,,BIZ-BBE-0012
+844648d6-f7e9-49a6-9ed6-6d402c0028cf,Alexander McCall Smith,,BIZ-BBE-0013
+618dd676-255b-4ff3-b0b2-857d10c3510b,Alexander Pushkin,,BIZ-BBE-0014
+ce59c119-0392-4e60-96c8-2639b7a27765,Alexandra Bracken,,BIZ-BBE-0015
+108427ab-ffce-4d43-be72-85fea6196297,Alexandre Dumas,,BIZ-BBE-0016
+004d6dab-419b-489d-bcce-1d331d2405bb,Alice Sebold,,BIZ-BBE-0017
+2d3c8b3d-d544-4e59-8dd9-59a95da885dc,Alice Walker,,BIZ-BBE-0018
+8bc91b94-a56c-440e-8cf4-7cf640413cba,Allen Ginsberg,,BIZ-BBE-0019
+ff01e204-f149-4b86-81ec-bda4e11da2dc,Ally Carter,,BIZ-BBE-0020
+5ee444ef-7c43-4c50-a297-204d70dfb7cf,Ally Condie,,BIZ-BBE-0021
+9049da06-a224-4834-9772-8fc632d2329a,Alyson Noel,,BIZ-BBE-0022
+2e39bd0a-f8d2-4cb3-86f4-f36dfbb51764,Amy Tan,,BIZ-BBE-0023
+e1e478bb-071c-4546-8f92-5d38d4becb40,Andre Dubus III,,BIZ-BBE-0024
+793692c8-30aa-40b8-80e4-d28627d071e7,Andrea Cremer,,BIZ-BBE-0025
+7936e401-7c7d-41fe-8d8a-9e43b8f3fc31,Andrew Davidson,,BIZ-BBE-0026
+f8e045fd-b731-4d8e-b5a4-5ba42a7cb0e1,André Aciman,,BIZ-BBE-0027
+30fbf739-fa98-405e-99a1-ee424ebfde12,Andy Weir,,BIZ-BBE-0028
+10bf975a-0b61-4e41-8f16-1e8c8921f9f9,Angie Thomas,,BIZ-BBE-0029
+ccfc04fb-6e98-4198-bc83-a4e97b94bdd3,Anita Diamant,,BIZ-BBE-0030
+fe2bf187-4f5e-408a-9ed6-6c7637049e64,Ann Brashares,,BIZ-BBE-0031
+fa0e83ee-0f96-4427-b0f2-5f329a386069,Ann Patchett,,BIZ-BBE-0032
+a3901e52-89f3-4b68-925d-5bbf80d7b84c,Anna Sewell,,BIZ-BBE-0033
+326042af-880d-425c-a689-8cba29994a59,Anne Frank,,BIZ-BBE-0034
+2b681fb3-a9e2-484b-8ea8-9d7087b0d207,Anne Morrow Lindbergh,,BIZ-BBE-0035
+bfe7b435-82ac-48e1-9deb-ccf50f27276f,Anne Rice,,BIZ-BBE-0036
+cbdd9d2a-de82-4ab8-ab7c-95ea9840654b,Annie Proulx,,BIZ-BBE-0037
+17e78b1f-43ee-45d6-a35d-c2b2925f0877,Anonymous,,BIZ-BBE-0038
+fef16271-dbd1-4503-9f4e-c6162fd658aa,Anthony Burgess,,BIZ-BBE-0039
+b39cec9a-9198-403a-b200-d6a1cabc244d,Anthony Doerr,,BIZ-BBE-0040
+854544e6-dab8-4818-aeb8-6854eacebc10,Antoine de Saint-Exupéry,,BIZ-BBE-0041
+e1aa8821-366f-4ddc-a116-0733c0282ab7,Aprilynne Pike,,BIZ-BBE-0042
+9523e51c-af9a-4657-8139-76baed1f848e,Art Spiegelman,,BIZ-BBE-0043
+a2744f72-c41d-4e00-8faa-1a56b7b3cd66,Arthur C. Clarke,,BIZ-BBE-0044
+6056538d-25b8-4686-938e-6d2faf71ccba,Arthur Conan Doyle,,BIZ-BBE-0045
+aa5d7996-f2d0-4c71-971d-fe74aa3777b3,Arthur Golden,,BIZ-BBE-0046
+c4a56574-b5da-4f82-82aa-e351a7cb753d,Arthur Miller,,BIZ-BBE-0047
+a61f0c2e-65a5-415e-aeaf-f18cd89b0260,Arundhati Roy,,BIZ-BBE-0048
+4df583d9-8198-47e0-b57c-61bb1570a4a7,Astrid Lindgren,,BIZ-BBE-0049
+2a9043f3-799f-4b01-ab88-9a3a862f81a5,Audrey Niffenegger,,BIZ-BBE-0050
+17444b8d-0943-4d7c-ace5-ee79d4e7e9e3,Augusten Burroughs,,BIZ-BBE-0051
+15907651-f1c7-4db2-b554-4113f1693b96,Ayn Rand,,BIZ-BBE-0052
+49ef6c30-56a4-420f-a0f9-b56ec5ac299c,Barbara Kingsolver,,BIZ-BBE-0053
+7abfcf79-2988-4c6f-ba01-7bc2a76efb61,Beatrice Sparks,,BIZ-BBE-0054
+c9d11168-6859-4ae2-8a87-0b5f4c8604e6,Becca Fitzpatrick,,BIZ-BBE-0055
+dc1c2b2e-eb72-4a8a-b6f7-a7ff6bf84f2e,Becky Albertalli,,BIZ-BBE-0056
+9c6010e2-20bc-4423-aa1f-23c8ad7bb711,Ben Peller,,BIZ-BBE-0057
+296b406d-67f9-447c-8f4a-f4e4a5dfd9c9,Benjamin Alire Sáenz,,BIZ-BBE-0058
+4066b7d8-f1ea-4cdc-8497-a06e3767a50b,Bernhard Schlink,,BIZ-BBE-0059
+675fb971-ed03-4a2f-b630-369e49d52c82,Beth Revis,,BIZ-BBE-0060
+c20f791a-2ca2-46a3-8dd5-b9c3999b6c89,Betty Smith,,BIZ-BBE-0061
+4ca61a9f-b55b-4c2e-99ee-94622beb6a39,Bill Bryson,,BIZ-BBE-0062
+e6541211-cf74-4643-8ad8-38ad8a4a70db,Bill Watterson,,BIZ-BBE-0063
+d678c1ba-1a60-4086-b026-d661010fe7f0,Billie Letts,,BIZ-BBE-0064
+b690cd61-a565-45b7-a525-c231d8e4e81d,Boris Pasternak,,BIZ-BBE-0065
+232d2beb-1b68-4ac6-a5d6-5282cde8c1a8,Bram Stoker,,BIZ-BBE-0066
+b1498b40-c92c-4970-b9b2-75fa542168b8,Brandon Mull,,BIZ-BBE-0067
+a3204864-d630-40ff-8c6a-1f05b34aada5,Brandon Sanderson,,BIZ-BBE-0068
+cdb5909a-6d19-4ccb-a962-3484b24270ad,Bret Easton Ellis,,BIZ-BBE-0069
+376d4451-134c-46e3-82ba-440494586fd6,Brian Jacques,,BIZ-BBE-0070
+ce563b35-d4eb-4c13-9e02-d6bf21743914,Brian Selznick,,BIZ-BBE-0071
+eccb30b9-79a5-45e1-be3c-0e6651e2171f,Bryce Courtenay,,BIZ-BBE-0072
+be815b48-b08d-4a8c-9241-be4838bd1ac9,C. Toni Graham,,BIZ-BBE-0073
+1491f5e6-5fa6-4405-96eb-13fd55e1f6db,C.S. Lewis,,BIZ-BBE-0074
+6dbaf13e-e06b-4b68-b4a2-da95303bc219,Carl Sagan,,BIZ-BBE-0075
+e2dbf851-55fb-4bfb-b286-c3bf8edb7eca,Carlos Ruiz Zafón,,BIZ-BBE-0076
+6e2d1c65-dccb-43ef-a475-373ae33db418,Cassandra Clare,,BIZ-BBE-0077
+6494a67d-5e23-48ae-b13d-d54d522aab7d,Catherine Marshall,,BIZ-BBE-0078
+eb31b436-f567-4537-8b25-f91502de66ee,Cecelia Ahern,,BIZ-BBE-0079
+81572c25-9de7-40b4-93bb-f50d988e4c2f,Chaim Potok,,BIZ-BBE-0080
+bdfa3448-fe12-4740-b8c7-fb3c60959afb,Charlaine Harris,,BIZ-BBE-0081
+511d01d9-4fbe-4a86-8c3e-e7e53c2f1937,Charles Bukowski,,BIZ-BBE-0082
+07445db1-0ec8-4660-aabf-8f4290be3f64,Charles Darwin,,BIZ-BBE-0083
+a8977d81-18d0-4135-9c79-a3d04fef4b2b,Charles Dickens,,BIZ-BBE-0084
+97db3595-bf28-4478-b187-ac308c87b1f1,Charles Frazier,,BIZ-BBE-0085
+4ef01128-403c-4c37-9e7d-10691c5fc0b2,Charlotte Brontë,,BIZ-BBE-0086
+84a2fd51-ac23-4d0c-985a-a4b8c3c39b0e,Charlotte Perkins Gilman,,BIZ-BBE-0087
+e162a99c-acf1-472f-b618-1df3597ae4cd,Chinua Achebe,,BIZ-BBE-0088
+4c1bd924-c8ac-474e-bbaa-85248a4cdc71,Chris Van Allsburg,,BIZ-BBE-0089
+664c2628-ef55-4419-84f4-ea428598af8f,Christopher Moore,,BIZ-BBE-0090
+7d1614b4-c007-422c-8f88-914045105aa6,Christopher Paolini,,BIZ-BBE-0091
+27dbed84-0a21-4da1-b8aa-cbf78ca42093,Chuck Palahniuk,,BIZ-BBE-0092
+53aa7f43-8129-4113-967d-6b2c74ad0629,Claudia Gray,,BIZ-BBE-0093
+cf4c8766-cf43-48e6-9940-1c7a840b6e2d,Clement C. Moore,,BIZ-BBE-0094
+432ce812-9967-4770-b79c-38a1f0960485,Colleen Hoover,,BIZ-BBE-0095
+9d3b5526-70cf-4bc1-8926-961b7fff542d,Colleen Houck,,BIZ-BBE-0096
+cc5f57f2-977b-42f4-94f3-102596c48285,Colleen McCullough,,BIZ-BBE-0097
+81c4162f-b9a6-4933-95fa-68a0ebc2d5a7,Cormac McCarthy,,BIZ-BBE-0098
+1de46ba6-8ec0-40a7-8a8e-c7a394484614,Cornelia Funke,,BIZ-BBE-0099
+5ba2cfdf-50fd-4bca-ad61-9c4bbf054b26,Corrie ten Boom,,BIZ-BBE-0100
+2dd13537-7b1d-4cc3-a34e-f330d070383c,Cynthia Hand,,BIZ-BBE-0101
+18d6bbbb-e36b-4c07-b363-6b41711243a0,D.H. Lawrence,,BIZ-BBE-0102
+47f0fbb4-4e3b-470a-8ffd-b4d0be3dde28,Dale Carnegie,,BIZ-BBE-0103
+bb7b841f-060b-4eaf-bb2d-20befca9b685,Dalton Trumbo,,BIZ-BBE-0104
+feaa84a3-fb1e-429d-b291-e8c9c4bcc6dc,Dan Brown,,BIZ-BBE-0105
+df511ea4-7c0b-4099-ba01-a9fd88c07aa9,Dan Simmons,,BIZ-BBE-0106
+37d4e04e-6e54-4313-9e8b-ab9f50fb54c5,Daniel Defoe,,BIZ-BBE-0107
+ba4eb612-c186-4896-b014-77ca0565b265,Daniel Keyes,,BIZ-BBE-0108
+c54848da-c8bc-42b1-8baa-623d5fba77a0,Daniel Quinn,,BIZ-BBE-0109
+a86712fb-226d-4bb7-ba99-6c2b284ac54e,Dante Alighieri,,BIZ-BBE-0110
+2d208882-5fc5-4b2d-b4c1-7a46bb50620a,Daphne du Maurier,,BIZ-BBE-0111
+d0dcff5d-f21f-44fb-8449-9af1f5989605,Dashiell Hammett,,BIZ-BBE-0112
+29ddf7e3-987d-40ab-8da5-9f9f669b45b3,Dave Eggers,,BIZ-BBE-0113
+5787da5c-fa59-481c-88a1-84a98f61abd4,Dave Pelzer,,BIZ-BBE-0114
+aef97e68-a767-49d2-b39e-35198b1868fd,David Foster Wallace,,BIZ-BBE-0115
+1bbc2b15-8ee4-444a-83e0-0784ace0f7d4,David Guterson,,BIZ-BBE-0116
+f01c0b5a-8ed8-47ed-bc23-b2918c5db9e1,David Levithan,,BIZ-BBE-0117
+1ec43383-0068-43d1-bbe6-b7dab4cd50c4,David McCullough,,BIZ-BBE-0118
+467728d0-3d4e-41a4-80e5-e91bb1d23e78,David Mitchell,,BIZ-BBE-0119
+14576d74-fbe6-4752-b8c6-c365e860fbbb,David Nicholls,,BIZ-BBE-0120
+73f2ca60-628b-4a01-92f0-ff4bf4938efd,David Sedaris,,BIZ-BBE-0121
+5954a958-c859-4f93-9c3c-5e196bfdece2,David Wroblewski,,BIZ-BBE-0122
+3c707869-9d84-4fb0-964a-c5f1105a7535,Dean Koontz,,BIZ-BBE-0123
+3af215bd-ee16-467f-b833-f9280d7c93d1,Deborah Harkness,,BIZ-BBE-0124
+f75845a6-d1aa-4e7f-98c0-ad5b54647685,Dee Brown,,BIZ-BBE-0125
+a3da6e42-736c-45cb-a545-2006b71379a9,Dennis Lehane,,BIZ-BBE-0126
+58a60c83-88eb-49c8-8256-808cfd35f8b8,Diamante Lavendar,,BIZ-BBE-0127
+67b15fc8-117c-45f8-bd99-c902c322c83b,Diana Forbes,,BIZ-BBE-0128
+5559815e-eb2a-4aeb-b695-1b3178c50719,Diana Gabaldon,,BIZ-BBE-0129
+f69e90c8-2976-40e0-8068-b854130dbb6c,Diana Wynne Jones,,BIZ-BBE-0130
+5831bf7c-f154-42bb-9f7b-eab59c019754,Diane Setterfield,,BIZ-BBE-0131
+adcf4aef-1c9b-49a1-8fb5-230a29594866,Dodie Smith,,BIZ-BBE-0132
+501a62e0-8608-47d8-a6f3-f98d71f8042f,Don DeLillo,,BIZ-BBE-0133
+df29cecc-09ef-4194-9b8f-ef9f1b73e79c,Donna Tartt,,BIZ-BBE-0134
+73006a7f-2e50-4313-a875-eebee5204ff6,Douglas Adams,,BIZ-BBE-0135
+02dd41b5-6eff-4a9a-b3b9-f997a6aa9dec,Douglas R. Hofstadter,,BIZ-BBE-0136
+066c78ac-3512-40f9-9537-3618dfb53cab,Dr. Seuss,,BIZ-BBE-0137
+0bf485b3-264d-4f5a-8811-9a647f826508,E. Lockhart,,BIZ-BBE-0138
+85cab7bf-9cfe-4988-a5f9-36f0ff640d45,E.B. White,,BIZ-BBE-0139
+76e37499-4a1b-4ce5-8d4e-ff314a8261c6,E.L. James,,BIZ-BBE-0140
+369d0a46-eedb-41dd-b5f1-94e414db603f,E.L. Konigsburg,,BIZ-BBE-0141
+fb60a290-c425-4e85-acdc-1fd358a764c4,E.M. Forster,,BIZ-BBE-0142
+761ca083-6a2a-47fa-a537-c69e769400c6,Edgar Allan Poe,,BIZ-BBE-0143
+9259a2fc-93bd-47e4-8281-d53573fb2c44,Edith Hamilton,,BIZ-BBE-0144
+fba96ec7-a6c1-4b2c-9e47-10905d90205e,Edith Wharton,,BIZ-BBE-0145
+6ee292da-cf67-451f-8bf4-4edf4bd220a8,Edmond Rostand,,BIZ-BBE-0146
+da972522-b493-4929-a8cc-a88be1028509,Elie Wiesel,,BIZ-BBE-0147
+c54f3b7a-0fa3-4379-9638-c5a6cebd7a46,Elizabeth Gaskell,,BIZ-BBE-0148
+62a01efb-39c8-486f-a69a-be6bad972b6e,Elizabeth George Speare,,BIZ-BBE-0149
+989e8601-5e75-4e9d-9482-b5c1add5779e,Elizabeth Gilbert,,BIZ-BBE-0150
+740ec333-7533-4823-a845-3e215b405820,Elizabeth Kostova,,BIZ-BBE-0151
+56b8fb04-31e8-4bf1-96dc-ff599d795fb6,Ellen Hopkins,,BIZ-BBE-0152
+4bb0ae10-7877-4c66-9dc4-2f7f91e21c50,Ellen Raskin,,BIZ-BBE-0153
+1f4415e0-123d-4569-89ab-b21ee6306254,Emily Brontë,,BIZ-BBE-0154
+a7c31773-ea3c-4710-b8b4-9b548cdb6b69,Emily Dickinson,,BIZ-BBE-0155
+be87a805-d97a-4e52-a122-0767246c32fb,Emma Donoghue,,BIZ-BBE-0156
+25480b64-27f9-4199-8eee-270f227aaf92,Emmuska Orczy,,BIZ-BBE-0157
+a19342df-6f89-4ff2-bb4e-9a2bdf77e920,Eoin Colfer,,BIZ-BBE-0158
+17fca512-3189-4a70-971d-f81b1365ff7c,Eric Carle,,BIZ-BBE-0159
+d23fd5cf-bfe8-4957-babc-0e8b54fdbcf2,Erich Maria Remarque,,BIZ-BBE-0160
+7e883106-dbd2-4ac0-8931-b981700704a6,Erich Segal,,BIZ-BBE-0161
+f22ceba9-178b-4a5d-834f-c6a5f6cb1840,Erik Larson,,BIZ-BBE-0162
+4e36f9e4-5b67-423f-bccc-b172213dace7,Erin Hunter,,BIZ-BBE-0163
+97b9feac-da77-4205-a77a-7ec2e122fa37,Erin Morgenstern,,BIZ-BBE-0164
+27168704-10ff-486e-b604-058b52f99790,Ernest Cline,,BIZ-BBE-0165
+22bb4f24-7622-4b6e-bf4b-ea3518753d70,Ernest Hemingway,,BIZ-BBE-0166
+3a6cc176-c1da-42ac-83aa-51c0043c480a,Evelyn Waugh,,BIZ-BBE-0167
+9428857b-5110-4001-b803-04525efbf9dc,F. Scott Fitzgerald,,BIZ-BBE-0168
+4ee390d9-70b1-4f4c-b956-c845e46bbe85,Fannie Flagg,,BIZ-BBE-0169
+699f4133-e78f-440a-af3d-8a6b9273ce92,Frances Hodgson Burnett,,BIZ-BBE-0170
+01e326df-ce71-4e36-86ba-7b57ed959a89,Francine Rivers,,BIZ-BBE-0171
+1c13b809-3d55-4c7d-8d88-b0f9b114a04d,Frank Herbert,,BIZ-BBE-0172
+d05ffa97-f759-42e2-accf-53130f16003b,Frank McCourt,,BIZ-BBE-0173
+63d80923-a5ec-45b6-acc8-4fd5cd5d152c,Franz Kafka,,BIZ-BBE-0174
+7636e885-13f5-4b47-906f-bbbed0842f00,Friedrich Nietzsche,,BIZ-BBE-0175
+4083fda4-1a60-4099-b1fe-e78723e50c96,Fyodor Dostoyevsky,,BIZ-BBE-0176
+a7dbc496-eb19-4aec-b256-e055184d8731,Gabriel García Márquez,,BIZ-BBE-0177
+42d14214-1ab9-477a-b2b3-f4200d3d8273,Gail Carson Levine,,BIZ-BBE-0178
+9368adab-b61f-4f17-8ca2-aeacb6003a50,Garth Nix,,BIZ-BBE-0179
+71c795cd-0bbf-4286-ae00-703ea0023e7c,Garth Stein,,BIZ-BBE-0180
+aaee650d-2f53-47fa-b876-82f80ac8d2b2,Gary Chapman,,BIZ-BBE-0181
+63cd1cbd-7fff-4093-a3ba-41ebd06ecf13,Gary Paulsen,,BIZ-BBE-0182
+2ffde08e-c61b-4d3f-bc23-65859f0899bc,Gaston Leroux,,BIZ-BBE-0183
+7b39f9c2-7f35-4547-af87-522c78ccad4b,Gayle Forman,,BIZ-BBE-0184
+2f403199-badf-454d-9744-96f5ec5af9b3,Geoffrey Chaucer,,BIZ-BBE-0185
+1f7e9ab8-98e3-4db1-b9b8-e8828ce1cb85,George Eliot,,BIZ-BBE-0186
+58b717c1-1aa0-4e36-8f24-548ea886ee6d,George Orwell,,BIZ-BBE-0187
+0da6c4d1-9e1c-44f7-9df6-543f0f27126e,George R.R. Martin,,BIZ-BBE-0188
+6e732992-6087-42ab-906b-65850470bdd0,Gillian Flynn,,BIZ-BBE-0189
+ed78e8d3-9992-4fa5-aa68-69c9ebd8fb15,Greg Mortenson,,BIZ-BBE-0190
+fb335752-10a0-49a9-8ea0-316cdd2fb4a4,Gregory David Roberts,,BIZ-BBE-0191
+e8891679-4d9f-4307-8d5f-90d14d48ec4f,Gregory Maguire,,BIZ-BBE-0192
+3696c1be-829c-4f49-8901-c2e93c2156ca,Gustave Flaubert,,BIZ-BBE-0193
+213bc181-8851-418e-b79a-87d17398c4ea,H.G. Wells,,BIZ-BBE-0194
+83d6f2ab-9ce3-4e67-aa80-4a7fb9b2ccdf,Hanya Yanagihara,,BIZ-BBE-0195
+0f1bf7b8-f1dd-4e9f-9cf8-5baadbb110ea,Harper Lee,,BIZ-BBE-0196
+6f67bda7-418e-4615-ab8e-079e340b1fdb,Harriet Beecher Stowe,,BIZ-BBE-0197
+caeb1fb0-11fc-4d9a-89e0-5355e590e74a,Haruki Murakami,,BIZ-BBE-0198
+674a18d2-54cb-45aa-ab2c-f75e001806f6,Helen Fielding,,BIZ-BBE-0199
+d1afc3ac-a2bf-40d0-bcb2-159202317160,Helen Keller,,BIZ-BBE-0200
+945cc61f-c522-495a-8982-b115926f002e,Helene Hanff,,BIZ-BBE-0201
+978ab180-adbd-4965-af5b-5ce6627fea70,Henri Charrière,,BIZ-BBE-0202
+6f65f330-f8cb-4b0c-88d6-6026e49eef8a,Henrik Ibsen,,BIZ-BBE-0203
+21785c3e-a4a7-460d-9410-33be86dcfcea,Henry David Thoreau,,BIZ-BBE-0204
+95f9a1fb-42ec-44b1-a2cc-63d0cdc5e00a,Henry James,,BIZ-BBE-0205
+8ea0b840-d152-487f-861b-26eba294f5cd,Herman Melville,,BIZ-BBE-0206
+923f2d67-01d6-423e-8c6a-91e6f98058c1,Herman Wouk,,BIZ-BBE-0207
+bc154e9c-538b-40eb-8f38-3b92864c5316,Hermann Hesse,,BIZ-BBE-0208
+ad2455ac-ff91-4d85-9cf9-5789944c8ff5,Homer,,BIZ-BBE-0209
+62e51a5d-d34a-49c0-bf4a-e30432da37c4,Howard Zinn,,BIZ-BBE-0210
+1b9b5d8d-32fb-47cd-8f04-14d211f62bda,Hubert SelJr.,,BIZ-BBE-0211
+bb00d022-7234-4d83-856f-f59bee0b24e2,Hunter S. Thompson,,BIZ-BBE-0212
+7ae36de9-d64f-4d60-8654-668d3cf7ce53,Iain Banks,,BIZ-BBE-0213
+b6b86b42-b1f9-4b36-8e99-69590058a302,Ian McEwan,,BIZ-BBE-0214
+864d2114-16c4-4818-92f4-a36ce1f83f30,Irvine Welsh,,BIZ-BBE-0215
+28a35e66-bb5f-4852-bb72-5914215c1fa8,Irving Stone,,BIZ-BBE-0216
+bd75d7db-6d19-4c17-95c5-9c8ccefad3df,Isaac Asimov,,BIZ-BBE-0217
+e6cfdb0c-c850-4b81-b83c-f098f256b380,Isabel Allende,,BIZ-BBE-0218
+c0e2112d-6baa-4f2d-9d7e-a160863594fa,Italo Calvino,,BIZ-BBE-0219
+132679dc-a32c-467f-bada-c11704b3a7b5,J.A. Redmerski,,BIZ-BBE-0220
+cfc3ca06-6542-4535-a0d9-4f7e5f32353c,J.D. Salinger,,BIZ-BBE-0221
+22d48649-b9cd-4e0e-9022-4eb92a56cafd,J.K. Rowling,,BIZ-BBE-0222
+95abda72-93c7-4565-9831-09751fcb9e5e,J.M. Barrie,,BIZ-BBE-0223
+56be81e6-5dd8-4c71-aa35-907a452c6c0a,J.M. Coetzee,,BIZ-BBE-0224
+137bc7d2-67d9-4375-b2f5-4979d01398f5,J.R. Ward,,BIZ-BBE-0225
+f0fea708-0c73-44ed-9c88-561726fae086,J.R.R. Tolkien,,BIZ-BBE-0226
+9789c839-ef81-486a-94e3-1db9389187d3,Jack Kerouac,,BIZ-BBE-0227
+dd925e72-f2b5-4d93-b2b8-f5a9c1003a49,Jack London,,BIZ-BBE-0228
+c9b95420-2db1-436c-b7cb-c61cb81c0a50,Jacob Grimm,,BIZ-BBE-0229
+4e26ec5c-e1c7-47b2-8ee2-8b51e5ed588c,Jacqueline Susann,,BIZ-BBE-0230
+05acb7e0-f27e-4eaa-a395-76129467b286,James Clavell,,BIZ-BBE-0231
+d730caab-b204-4db0-8387-ed9beae06be1,James Dashner,,BIZ-BBE-0232
+37f68064-e91a-4a1c-8864-4bf2c6e924ea,James Fenimore Cooper,,BIZ-BBE-0233
+aae56848-f932-4efa-af9e-4c2ae98f571c,James Frey,,BIZ-BBE-0234
+9d84b0c3-b290-4a4e-af69-5e2d6c672208,James Herriot,,BIZ-BBE-0235
+aa1a7da3-36ab-44b9-bc42-a46146ec2dba,James Joyce,,BIZ-BBE-0236
+bdc49fc7-a155-44f7-afcf-63a6b5587644,James Patterson,,BIZ-BBE-0237
+d270a7c4-9413-47d3-8b4b-630eb6157d6e,Jamie McGuire,,BIZ-BBE-0238
+ed9e9dca-1876-4fc7-990f-5f049171845a,Jandy Nelson,,BIZ-BBE-0239
+0a775b24-d988-49fa-9a5e-911178f9c38a,Jane Austen,,BIZ-BBE-0240
+df751326-bdc0-4926-82ea-12a7b4af5004,Jane Carruth,,BIZ-BBE-0241
+1b28cf81-5923-4385-976b-1c26a1f9764f,Janet Evanovich,,BIZ-BBE-0242
+ebec0853-cbac-414c-a4fc-328108a5c9fc,Janet Fitch,,BIZ-BBE-0243
+e1ebee00-4855-4d1b-9231-5bd1ad94e316,Jasper Fforde,,BIZ-BBE-0244
+b2c09e2b-fa48-4ac5-abc0-ec7ad8a806fc,Jay Asher,,BIZ-BBE-0245
+debb52e2-b67a-4c51-b5ae-bc7409955824,Jean M. Auel,,BIZ-BBE-0246
+e96e93cc-5a8a-4213-804f-17e476d46983,Jean-Paul Sartre,,BIZ-BBE-0247
+abe7192a-2178-4404-8798-e9641007a065,Jeaniene Frost,,BIZ-BBE-0248
+c4399ebc-d855-4e9a-bda5-0d182659c9dc,Jeanne DuPrau,,BIZ-BBE-0249
+1c07d29b-ebca-4126-9fdc-faa423fadefa,Jeannette Walls,,BIZ-BBE-0250
+a022ba3b-7576-4139-8778-4b8111eb6e85,Jeffrey Archer,,BIZ-BBE-0251
+8ab219df-bae2-426b-b313-5901ffb59e07,Jeffrey Eugenides,,BIZ-BBE-0252
+03525c06-337e-4518-9395-e6ce6db723bc,Jennifer L. Armentrout,,BIZ-BBE-0253
+4708b45a-098d-4328-97c9-3a8dc0cd5b00,Jennifer Niven,,BIZ-BBE-0254
+15756870-19aa-48e5-bf4b-c1ebd4dfc108,Jenny Han,,BIZ-BBE-0255
+b7039f5b-9551-4304-b7f8-1be53afa3fcb,Jerry Spinelli,,BIZ-BBE-0256
+96cf188c-a737-40ac-989b-83e3e9905348,Jhumpa Lahiri,,BIZ-BBE-0257
+c2bf427f-9836-4d2b-9918-b67f2e08b2fc,Jim Butcher,,BIZ-BBE-0258
+f94312db-759c-439f-ae0b-d0a4a623dbb8,Joanne Harris,,BIZ-BBE-0259
+85cd490e-61c9-429d-af52-68c3a4b056b6,Jodi Picoult,,BIZ-BBE-0260
+e361cd33-1112-4912-9ec8-78005ac9b8e8,Johann Wolfgang von Goethe,,BIZ-BBE-0261
+80392045-279a-4b88-88b2-af3bbd5e9487,Johanna Spyri,,BIZ-BBE-0262
+71cdf198-9aad-4edd-acd6-02685a0bac78,John Ajvide Lindqvist,,BIZ-BBE-0263
+dacfeb32-5675-423e-a6c3-17af4205394c,John Berendt,,BIZ-BBE-0264
+e248500d-be74-427a-91e1-26a11fd673b3,John Boyne,,BIZ-BBE-0265
+66b72fac-68cf-47cf-b42a-3b6c9b368baf,John Bunyan,,BIZ-BBE-0266
+f2d1646f-057a-4a9d-b12b-5ecb907c1cce,John Flanagan,,BIZ-BBE-0267
+b816a9da-e094-4115-a55d-afedc97f2532,John Fowles,,BIZ-BBE-0268
+870ee2ac-9bc5-4d32-aef2-be695d01588f,John Green,,BIZ-BBE-0269
+b1ff7fd3-f1d4-4fca-8234-8ca529880606,John Grisham,,BIZ-BBE-0270
+c2bd4b0b-c567-4b69-b6da-51b18209d066,John Grogan,,BIZ-BBE-0271
+fca6f665-cde7-4c86-afb7-9af2877dc770,John Irving,,BIZ-BBE-0272
+dc1a6bf0-3078-40e9-90ff-1b801ce1eeaa,John Kennedy Toole,,BIZ-BBE-0273
+839bd30d-b0c0-490c-aac4-3de5cb214890,John Knowles,,BIZ-BBE-0274
+8d13ae33-df3d-402e-944b-2a2c1e5d8b16,John Milton,,BIZ-BBE-0275
+049bc6b4-b48a-4ccb-9fd0-f2ac6dbabea4,John Steinbeck,,BIZ-BBE-0276
+d9d9847d-2e8d-4f2d-903d-d31f31e19a2c,Jojo Moyes,,BIZ-BBE-0277
+4b430f85-1e31-440a-9027-156b53924b94,Jon Krakauer,,BIZ-BBE-0278
+9784aed8-b811-41d6-b84c-76dbf496cfb5,Jon Scieszka,,BIZ-BBE-0279
+ba35a9d2-3cb9-429a-b308-7b382138446b,Jon Stone,,BIZ-BBE-0280
+a00eb8a6-207e-4376-a06f-1de31b04044c,Jonathan Franzen,,BIZ-BBE-0281
+7a5f8d8a-8603-4d94-9586-9ab788e2c36f,Jonathan Safran Foer,,BIZ-BBE-0282
+44b5aedc-4d46-471e-af97-b325e18ef583,Jonathan Stroud,,BIZ-BBE-0283
+72c4a9cd-a2a7-49cf-8aa2-848dfed9972a,Jonathan Swift,,BIZ-BBE-0284
+c14c7e72-72a8-43f9-9952-af6077f454b0,Jorge Luis Borges,,BIZ-BBE-0285
+c14902df-ae5d-4443-a0b5-9ed320711019,Joseph Campbell,,BIZ-BBE-0286
+33e51dfc-f081-4f9d-a5c2-563ab2c66f2b,Joseph Conrad,,BIZ-BBE-0287
+6bb74ccd-3c83-47d5-a46d-47cf12695bf7,Joseph Heller,,BIZ-BBE-0288
+6a9445d4-1b8f-4dc4-9c2e-42caef2a6684,Joseph Smith Jr.,,BIZ-BBE-0289
+f5e1d156-78e3-407c-9a8a-8bb730be5f70,Jostein Gaarder,,BIZ-BBE-0290
+3625ea0c-b8f2-46a0-a0fc-9170c62bc519,José Saramago,,BIZ-BBE-0291
+5457bd8d-a035-4dae-8ad5-cb2bf6b28c44,Judy Blume,,BIZ-BBE-0292
+ed41a459-ff28-44d6-ad94-6bd20129ec9c,Jules Verne,,BIZ-BBE-0293
+8536fce3-0599-48a7-a9f0-4048ee6980a8,Julie Kagawa,,BIZ-BBE-0294
+d17e30b8-e68b-48ed-8252-2a86667f2bad,Juliet Marillier,,BIZ-BBE-0295
+22a9de1b-8a14-4f8c-9633-c9db45fbc5d7,Jung Chang,,BIZ-BBE-0296
+a332dd37-ed78-4e4b-997c-901c94c94ccd,Junot Díaz,,BIZ-BBE-0297
+3928fb19-7d3d-4172-845b-dc846afe4aeb,Justin Cronin,,BIZ-BBE-0298
+c1d694f6-9822-45e7-91ab-aced54675f7e,Kahlil Gibran,,BIZ-BBE-0299
+abe7245e-adde-448d-849c-b3cfe70706f6,Kami Garcia,,BIZ-BBE-0300
+e7abfe04-646b-440f-a609-b0ba294380f1,Karen Marie Moning,,BIZ-BBE-0301
+d6f55b9b-de91-465a-94dc-c0ed8b504097,Kate Chopin,,BIZ-BBE-0302
+69c0c173-f710-4c03-899a-08b20e08e629,Kate DiCamillo,,BIZ-BBE-0303
+c30a0ff9-6f10-4cf1-a17f-89c31bb00af7,Kate Morton,,BIZ-BBE-0304
+80310b03-dd6d-4d34-8310-574878f0c2bc,Katherine Dunn,,BIZ-BBE-0305
+4a73a973-2a8b-47e2-ae15-40533284f1c2,Katherine Paterson,,BIZ-BBE-0306
+66dfe9a3-faa3-40ee-8512-b67499ba2e64,Kathryn Stockett,,BIZ-BBE-0307
+ae654967-5f2a-4cf7-91d8-a4f1cf08d170,Kazuo Ishiguro,,BIZ-BBE-0308
+4188e7ec-6a25-4369-a4f4-f53a16472b88,Kelley Armstrong,,BIZ-BBE-0309
+91934208-cfc9-4c2e-8966-b95c5bb55a80,Ken Follett,,BIZ-BBE-0310
+249fbad8-507b-45a7-ad4d-6d77919ad226,Ken Kesey,,BIZ-BBE-0311
+464f63eb-962f-42ad-8c7c-7b27ca3e07aa,Kenneth Grahame,,BIZ-BBE-0312
+3f27d020-4801-4963-b8d3-d30d3f83c7f9,Kenneth Thomas,,BIZ-BBE-0313
+e1594517-0c75-4348-9ce1-744e65922483,Kerstin Gier,,BIZ-BBE-0314
+f9066b8f-8133-4ebf-897b-fa5497a70cb0,Khaled Hosseini,,BIZ-BBE-0315
+38caf2d9-6ad7-4b1e-8508-c42934100fa5,Ki Longfellow,,BIZ-BBE-0316
+e9c4ec39-d6b7-48b4-bcd2-f89dac688dd4,Kiera Cass,,BIZ-BBE-0317
+1d86bb4b-041b-4b10-be79-79fd7d0d9690,Kim Edwards,,BIZ-BBE-0318
+60ac765b-6818-4584-8f4b-cfdece8a3373,Kim Harrison,,BIZ-BBE-0319
+2af5fa5b-4d28-480f-b202-7c2c93ba8793,Koushun Takami,,BIZ-BBE-0320
+9a7efd19-b074-434e-bb9b-96b4c2372b23,Krishna-Dwaipayana Vyasa,,BIZ-BBE-0321
+8b9bf316-43d9-4d5a-91db-30b8d518f95e,Kristin Cashore,,BIZ-BBE-0322
+f3171ddb-3789-4f6c-bd28-2b5bbe88f14f,Kristin Hannah,,BIZ-BBE-0323
+7ca02958-8816-4ae1-a2f3-5de3d12744ff,Kurt Vonnegut Jr.,,BIZ-BBE-0324
+fb7d26c1-abe5-4b9a-9efb-9b18285c7460,Kyle Keyes,,BIZ-BBE-0325
+eaec3d16-0caf-46a7-af6a-69f8938758a3,L. Frank Baum,,BIZ-BBE-0326
+3613b8ab-418e-4ecd-bab4-9d9cea3a2141,L.J. Smith,,BIZ-BBE-0327
+6c22258e-b989-4c61-ba79-d69ca681b153,L.M. Montgomery,,BIZ-BBE-0328
+bf9e6ddb-623b-447c-b2f9-afa4664e1b7e,Laini Taylor,,BIZ-BBE-0329
+c2233212-14d1-47d3-8f4d-344083ce0b2b,Lao Tzu,,BIZ-BBE-0330
+2aa0c45b-dd3d-4db8-a934-8877c242ce8d,Larry McMurtry,,BIZ-BBE-0331
+eb3f3107-45fa-4a31-9a61-9a82a7cc021d,Laura Esquivel,,BIZ-BBE-0332
+956e7e89-239a-4cf0-84ac-b3be3da1214f,Laura Hillenbrand,,BIZ-BBE-0333
+6ef381e1-f6f6-4c32-8091-50eb449a584f,Laura Ingalls Wilder,,BIZ-BBE-0334
+8f54fcd8-8b71-4883-908e-4c6ea2e05be1,Laurell K. Hamilton,,BIZ-BBE-0335
+9b648fbe-4128-40aa-83bc-19c0e882fc6f,Lauren Kate,,BIZ-BBE-0336
+fec92624-6a9c-49b2-a79d-64f75cafe9b0,Lauren Oliver,,BIZ-BBE-0337
+d8638891-aea1-4bb7-98e6-a2e2e37b711c,Lauren Weisberger,,BIZ-BBE-0338
+9e0cb097-392e-4fab-8f9e-d80bcf56db71,Laurie Halse Anderson,,BIZ-BBE-0339
+3aac4504-621a-4de8-9f74-0833378704c2,Leif Enger,,BIZ-BBE-0340
+c4285816-00ee-4a57-bbf3-8405e5babfcc,Leigh Bardugo,,BIZ-BBE-0341
+15a3629f-0935-416c-88b6-364b0ba5b099,Lemony Snicket,,BIZ-BBE-0342
+837851e0-10aa-4a25-a4fe-f5c0b38dd3f3,Leo Tolstoy,,BIZ-BBE-0343
+5493a661-ce16-4d24-8997-d0f0192fa2c6,Leon Uris,,BIZ-BBE-0344
+daa8fbca-20bb-4421-b279-71c866272a35,Lewis Carroll,,BIZ-BBE-0345
+212c252f-e4f1-4c2e-a93c-b441daa2aa0d,Libba Bray,,BIZ-BBE-0346
+d4ad1bb8-4bfa-4711-ab56-b105babc94df,Lionel Shriver,,BIZ-BBE-0347
+7fc9b829-1c22-4c96-a7ee-00372d301c93,Lisa Genova,,BIZ-BBE-0348
+a18ad017-dec1-488a-b0f4-5bc3e0d3a693,Lisa See,,BIZ-BBE-0349
+4467ed29-1f0c-46a9-a21c-6ca11785b40b,Lois Lowry,,BIZ-BBE-0350
+4e3a1ce0-c558-49ab-9210-024e800412a7,Louis Sachar,,BIZ-BBE-0351
+cdffd437-d04f-466d-9da9-718147df9e3e,Louis de Bernières,,BIZ-BBE-0352
+c1fb0ee0-7de1-4933-a644-c4f6f8e0f7db,Louis-Ferdinand Céline,,BIZ-BBE-0353
+35d15e72-bfb7-4d60-ae86-c3141e690cb4,Louisa May Alcott,,BIZ-BBE-0354
+98239fbf-8ca3-451c-9f0f-c4ea35ac8a8f,M.M. Kaye,,BIZ-BBE-0355
+d82b3720-c2a0-40b7-9a74-1a2f23fb4861,Madeleine L'Engle,,BIZ-BBE-0356
+60241f78-02fe-4f4a-98f8-f25f54a76a47,Madeline Miller,,BIZ-BBE-0357
+b731b37d-f00a-43bc-9da3-97e255e71b9f,Maggie Stiefvater,,BIZ-BBE-0358
+8bbf0052-43a9-44ad-807a-53528da9a5d4,Marcel Proust,,BIZ-BBE-0359
+ed905b3a-1ce5-456e-9081-189152c6007a,Marcus Aurelius,,BIZ-BBE-0360
+3635e857-56c7-47ff-9a2f-404baa6b9f51,Margaret Atwood,,BIZ-BBE-0361
+80ee7d01-3af6-4254-81cc-e946d3e0fb57,Margaret Mitchell,,BIZ-BBE-0362
+a4739faf-d411-489f-bcaa-d2d307440748,Margaret Wise Brown,,BIZ-BBE-0363
+81cadc02-a9d9-4b3f-9e46-9f27b1fc4fb1,Margery Williams Bianco,,BIZ-BBE-0364
+b9b9b5ba-d000-4c86-8d2c-0d721fa24a34,Maria V. Snyder,,BIZ-BBE-0365
+9a2d553a-a4af-426f-9fe3-ec89f5d9b797,Marie Lu,,BIZ-BBE-0366
+c110c2f2-cddf-4e69-8937-ae27baeaba59,Mario Puzo,,BIZ-BBE-0367
+381d3324-cfe2-4e24-bf33-245d1f889a4b,Marion Zimmer Bradley,,BIZ-BBE-0368
+1eb80f04-c8a7-46fa-a242-cae276aadc0a,Marissa Meyer,,BIZ-BBE-0369
+d2c3795c-36f3-4c9f-b227-aeb545b1afc9,Mark Haddon,,BIZ-BBE-0370
+ba820c4d-1ce5-4745-b1f2-dd1ef1c26ecd,Mark Twain,,BIZ-BBE-0371
+fa45c104-feac-4497-98e2-00c5245b644b,Mark Z. Danielewski,,BIZ-BBE-0372
+3821885a-ba09-43e6-ac70-3f66d99b6bc4,Markus Zusak,,BIZ-BBE-0373
+dc151ab3-cc76-4251-9b16-cdf91461e323,Martin Heidegger,,BIZ-BBE-0374
+463ada30-38b1-437c-9d01-d4e3437479d2,Mary Ann Shaffer,,BIZ-BBE-0375
+b1beb147-c1f1-4345-a53b-06f7dc5232e4,Mary Doria Russell,,BIZ-BBE-0376
+263b4d9d-af28-4054-b8e8-8a0f76df4e72,Mary Wollstonecraft Shelley,,BIZ-BBE-0377
+ef18d2a6-e002-4b83-9e7d-bbf3b91cbd49,Maurice Sendak,,BIZ-BBE-0378
+31290be3-4800-4889-871f-e3c68d878ed5,Max Brooks,,BIZ-BBE-0379
+d9ff056b-ce3c-4f9f-882e-951bc64907b0,Max Lucado,,BIZ-BBE-0380
+7f8e3b87-4ba4-425d-b488-86a3721585ce,Maya Angelou,,BIZ-BBE-0381
+e2b84ff6-3855-4bae-9591-56ffcbc25949,Melissa Marr,,BIZ-BBE-0382
+1494859d-86c7-4c84-95c1-c9dbf3265fb1,Melissa de la Cruz,,BIZ-BBE-0383
+7b35cb1d-7e02-48ee-a1c9-1baf5de757f0,Michael Chabon,,BIZ-BBE-0384
+e09570e5-4f6a-42c1-a967-dddde4cc48ef,Michael Crichton,,BIZ-BBE-0385
+8723dd8f-847c-4245-835a-d22c35ba1247,Michael Cunningham,,BIZ-BBE-0386
+5672fa7f-3c1a-40c9-a0da-8694f66767df,Michael Ende,,BIZ-BBE-0387
+343e00a9-7f10-4309-adf0-e7a9f053f782,Michael Grant,,BIZ-BBE-0388
+1041b286-7dcf-4f7e-8f67-3529db475811,Michael Ondaatje,,BIZ-BBE-0389
+36bf0357-d125-426f-b27a-2f4e3ccdc0d6,Michael Pollan,,BIZ-BBE-0390
+dde3fd39-c2d1-423d-8fb2-8a98b4e2bf03,Michael Shaara,,BIZ-BBE-0391
+17bba250-eafc-40bb-a163-9ca037a2a500,Michelle Hodkin,,BIZ-BBE-0392
+72fba024-ff5f-428e-b667-27f62403ce61,Miguel de Cervantes Saavedra,,BIZ-BBE-0393
+d9a86a74-393b-4630-a941-3d03a1609b51,Mikhail Bulgakov,,BIZ-BBE-0394
+7825b893-737e-4862-88f7-218e2552633c,Milan Kundera,,BIZ-BBE-0395
+d8585484-7785-4756-982c-95bb3dc74632,Mildred D. Taylor,,BIZ-BBE-0396
+d1d44df7-025c-40db-99b7-a05630400426,Mitch Albom,,BIZ-BBE-0397
+ca32b782-0fb2-4480-b37a-24bdf15fbe1a,Munro Leaf,,BIZ-BBE-0398
+05cb1e4d-d279-43af-bb06-399a74d7e49f,Muriel Barbery,,BIZ-BBE-0399
+9470a40e-2571-46af-b6c0-4770290d870c,Nancy E. Turner,,BIZ-BBE-0400
+869eeee1-5248-4c77-b985-6698e66a2765,Natalie Babbitt,,BIZ-BBE-0401
+52a1bc50-dcef-4686-82f6-f7ccbb5d3dd5,Nathaniel Hawthorne,,BIZ-BBE-0402
+2e2473fe-7b9a-4f76-b97f-27e725019488,Neal Shusterman,,BIZ-BBE-0403
+6fbe5162-a642-41ee-983d-e30c43e886e3,Neal Stephenson,,BIZ-BBE-0404
+627ba7d5-358f-4c0b-9d08-15c52b1ea08c,Ned Vizzini,,BIZ-BBE-0405
+394cc408-6f71-4de2-87a3-cfc6429cfdd8,Neil Gaiman,,BIZ-BBE-0406
+a3c4c6d5-d1e9-4db4-b2fc-71756dab576b,Nevil Shute,,BIZ-BBE-0407
+4a554bb9-1400-4b88-b94e-6781dcd3e3ca,Niccolò Machiavelli,,BIZ-BBE-0408
+0fe03f80-6185-4e2d-9e64-ce33dc5a245f,Nicholas Evans,,BIZ-BBE-0409
+c7cd3e82-369a-481f-9dd4-4df9db1ca6f4,Nicholas Sparks,,BIZ-BBE-0410
+1e643ad6-f1e0-4bfb-8a24-bb0388cc6ff5,Nick Hornby,,BIZ-BBE-0411
+744a54cb-9ea7-47f3-8e3f-4add859a75b9,Nicole Krauss,,BIZ-BBE-0412
+c4119931-cf21-468e-b83a-0a534f16125f,Norman Maclean,,BIZ-BBE-0413
+9cdb3ef4-5715-4256-9af4-7972a02d9980,Norton Juster,,BIZ-BBE-0414
+9309603a-0c20-425e-9a3d-e9e776a20a36,Olive Ann Burns,,BIZ-BBE-0415
+3c04d14a-c35e-404b-aa8f-de256c8851f9,Orson Scott Card,,BIZ-BBE-0416
+edf622e9-5922-4be1-8db5-ab32434d9e51,Oscar Wilde,,BIZ-BBE-0417
+b052be41-3854-46e7-b4d3-f074865e24d4,P.C. Cast,,BIZ-BBE-0418
+ebd95ca3-f7fa-4da6-92ba-3199d9621443,P.D. Eastman,,BIZ-BBE-0419
+a0897468-a220-4419-8b0e-b5532797a6a2,P.L. Travers,,BIZ-BBE-0420
+59a0d9cc-5fe2-4b2f-bce4-5b7d4c416797,Pablo Neruda,,BIZ-BBE-0421
+9f9d3af7-0cba-47bd-80d5-394f68d3a305,Pat Conroy,,BIZ-BBE-0422
+83a8d31f-8c21-440c-aba2-24200f6b1f92,Patricia Briggs,,BIZ-BBE-0423
+9e185041-ebed-4854-bcbd-7454802a34ca,Patrick Ness,,BIZ-BBE-0424
+92ae9197-9170-40f5-9ee7-b9d2449792da,Patrick Rothfuss,,BIZ-BBE-0425
+e716667c-7062-4a69-a91f-3c92548c7526,Patrick Süskind,,BIZ-BBE-0426
+555430e4-2524-4993-8bde-a22c0fdbb0b1,Paula Hawkins,,BIZ-BBE-0427
+b2a1434f-7abb-4334-a5dc-7c4b8f77a205,Paullina Simons,,BIZ-BBE-0428
+0856b590-0572-4643-a762-3152cce5b300,Paulo Coelho,,BIZ-BBE-0429
+6bfad46b-9df5-4205-835e-f46f78ae183c,Pearl S. Buck,,BIZ-BBE-0430
+a58c7e66-c73d-463a-ad58-cdc5fd72939a,Peter Høeg,,BIZ-BBE-0431
+c9a0163e-a454-4916-a83e-ad69bb516707,Peter S. Beagle,,BIZ-BBE-0432
+ef523a7b-95c7-43ca-abcf-6359d4e776d3,Philip K. Dick,,BIZ-BBE-0433
+9f195224-d165-44df-a364-43d8f9f14ce7,Philip Pullman,,BIZ-BBE-0434
+b2e205cc-dd56-4f2e-aa02-ae967660b33a,Philippa Gregory,,BIZ-BBE-0435
+25910cba-348f-4f94-a46b-467aa9452efc,Pierce Brown,,BIZ-BBE-0436
+2f7f151c-a4f2-4cca-b8c2-8844a580dede,Pittacus Lore,,BIZ-BBE-0437
+4c8fe81b-b9ad-49f7-a283-15eba16e30f7,Plato,,BIZ-BBE-0438
+9ef2c05f-afb5-4fbf-ae84-ae04650cd4ee,R.D. Ronald,,BIZ-BBE-0439
+8a9219ad-a955-4df7-899e-420f88ff8dc4,R.J. Palacio,,BIZ-BBE-0440
+d6a3488f-a709-4a57-a399-df725e731941,Rachel Caine,,BIZ-BBE-0441
+466d1470-a3df-4304-85cb-00684da07a80,Rachel Hawkins,,BIZ-BBE-0442
+86fbe1b9-b591-4722-b059-f730e1c922ca,Rainbow Rowell,,BIZ-BBE-0443
+c4fcfe9f-eaff-4fb0-9e77-f71c85349a5e,Ralph Ellison,,BIZ-BBE-0444
+8fc749a8-e06a-4662-9c43-be800ffd6cdb,Randy Pausch,,BIZ-BBE-0445
+72a88afd-7f2b-4e7c-a272-a7af65a4afe4,Ransom Riggs,,BIZ-BBE-0446
+a6e25067-3084-43f3-a9a7-5f0bdb718d3a,Ray Bradbury,,BIZ-BBE-0447
+b3c0f97a-123e-4ed9-95c3-5505d112a73a,Raymond Chandler,,BIZ-BBE-0448
+6617b7f7-4ee4-4e13-b785-6089b056cd00,Raymond E. Feist,,BIZ-BBE-0449
+bf4c37e0-815f-4d18-8931-7aef90f2da79,Rebecca Wells,,BIZ-BBE-0450
+af9eaf70-57c4-43b9-af0b-a356bcadd4c8,Reduced Shakespeare Company,,BIZ-BBE-0451
+a950c335-5b14-4e0d-b197-58d5dcfa95a7,Rhonda Byrne,,BIZ-BBE-0452
+19943404-a429-40b2-9cfd-216ba776599c,Richard Adams,,BIZ-BBE-0453
+8159f441-faed-444a-a931-5d9de78976b8,Richard Bach,,BIZ-BBE-0454
+450f261d-ac61-43e7-b42d-02de329f2e9e,Richard Bachman,,BIZ-BBE-0455
+55a163f6-f0d8-43bf-9255-83bfaee5e162,Richard Dawkins,,BIZ-BBE-0456
+9f721c0f-18fe-45f0-9b1c-585b2f257b31,Richard Llewellyn,,BIZ-BBE-0457
+c1128f5c-a03e-4168-b694-e0c675ba3bc0,Richard Matheson,,BIZ-BBE-0458
+a36a27fa-1a7a-4a6b-a22b-dac7302077fd,Richard Wright,,BIZ-BBE-0459
+5085065f-84e4-43fd-b33f-4c55e563a6ce,Richard Yates,,BIZ-BBE-0460
+b9a67766-8f8e-4297-8e9b-21b89d3e33d8,Richelle Mead,,BIZ-BBE-0461
+e43cf911-abc3-4fd5-9995-136137521473,Rick Riordan,,BIZ-BBE-0462
+650b1bcb-7ba0-4289-8132-cd5ae2235ffe,Rick Yancey,,BIZ-BBE-0463
+eec1d307-af8b-4ccc-b5e7-80b9ccda0cb1,Roald Dahl,,BIZ-BBE-0464
+0d18f7c5-c4e1-4d04-8898-1f381599b878,Robert A. Heinlein,,BIZ-BBE-0465
+20c465e7-7c6b-4026-a698-b5983b34f103,Robert Frost,,BIZ-BBE-0466
+d623d396-170d-4677-aa1e-5cf0165a0e0d,Robert Graves,,BIZ-BBE-0467
+1432c8bc-6f4d-4a6f-983a-61f1ac9c890a,Robert James Waller,,BIZ-BBE-0468
+7ba51a94-f795-4b4b-b8cb-62702c1e6970,Robert Jordan,,BIZ-BBE-0469
+9edc9fd5-406e-4830-a098-d7f03d8117ad,Robert Louis Stevenson,,BIZ-BBE-0470
+9111f508-5d20-40da-9299-352b1deeb523,Robert Ludlum,,BIZ-BBE-0471
+d8863380-f595-4a55-8f56-ac0979bcfdd0,Robert M. Pirsig,,BIZ-BBE-0472
+1c45fccd-c9a7-4720-b3bf-ab4db220c9ed,Robert Munsch,,BIZ-BBE-0473
+7bb61f2e-3050-405b-9707-9af99fa0a194,Robert Musil,,BIZ-BBE-0474
+a2535485-694f-4564-9058-554206058dc2,Robert Penn Warren,,BIZ-BBE-0475
+d94d8dd4-e91e-4eb3-8b46-dafa3bf8f169,Robert R. McCammon,,BIZ-BBE-0476
+1a64d5f3-3a59-4fe8-9f46-9e0fb1f76dcf,Robin Hobb,,BIZ-BBE-0477
+17310037-df37-4e08-9897-1000b6da14fc,Robin McKinley,,BIZ-BBE-0478
+8b3aead6-8b27-470e-8d14-becae43d5234,Robyn Mundell,,BIZ-BBE-0479
+d35b7532-f1b8-43bb-a920-78cab6d7f718,Rohinton Mistry,,BIZ-BBE-0480
+194dcf3a-bc8e-45fc-99fe-b6920fae39c6,Rosamunde Pilcher,,BIZ-BBE-0481
+0479bc90-bd7f-43cd-9409-6346385d7011,Rudyard Kipling,,BIZ-BBE-0482
+d122743e-5b08-490c-93ea-10c6f56a3b1e,Ruta Sepetys,,BIZ-BBE-0483
+c4b0cd89-a82f-43dc-8847-4e7e4adbd0d4,S.C. Stephens,,BIZ-BBE-0484
+4775a181-668d-4538-8c63-7e2da0ec8336,S.E. Hinton,,BIZ-BBE-0485
+0955fa99-6683-46b7-a5c4-d77551ddd708,Sabaa Tahir,,BIZ-BBE-0486
+e25ff917-7330-4316-8631-5b60fe6b9186,Salman Rushdie,,BIZ-BBE-0487
+7b3731e7-ef4c-4cd1-a31a-949ca3ac4d02,Samantha Young,,BIZ-BBE-0488
+e288eaba-dbd7-4395-b1bd-17bf76b772a1,Samuel Beckett,,BIZ-BBE-0489
+c742cd77-d061-48bb-a87d-4c428f03748f,Samuel Taylor Coleridge,,BIZ-BBE-0490
+7e8e6e26-178e-4b18-9eb4-2c69845c9cb0,Sara Gruen,,BIZ-BBE-0491
+27c6702c-611e-47e5-a6eb-ef9686843e62,Sarah Dessen,,BIZ-BBE-0492
+12f52ad9-01d3-4682-9d96-d87e64d08593,Sarah J. Maas,,BIZ-BBE-0493
+c8b13835-9fb0-4602-b3ad-7363ff459937,Sarah Waters,,BIZ-BBE-0494
+9513c110-c060-46b3-9f2e-a2bccff7dded,Scott Lynch,,BIZ-BBE-0495
+44cedff1-adf6-4322-8269-e4fa0c6dc194,Scott O'Dell,,BIZ-BBE-0496
+2b1fe645-442f-4fe5-8004-4529e53abf2f,Scott Westerfeld,,BIZ-BBE-0497
+6b87b528-f775-43fc-9195-4cd41b0e131d,Sebastian Faulks,,BIZ-BBE-0498
+735ac46e-a503-431f-b863-cd2834d24823,Shannon Hale,,BIZ-BBE-0499
+7834e9e1-e34a-4f45-a56f-af3a1479adf7,Sharon Creech,,BIZ-BBE-0500
+c680bf6b-f99a-4e45-b340-a0df1ebd66ac,Shel Silverstein,,BIZ-BBE-0501
+756ca21d-ceb7-4ae6-8836-bfd98d323c8a,Sherrilyn Kenyon,,BIZ-BBE-0502
+da8bf39b-14b0-4fc5-a9e9-bdd308034ccd,Shirley Jackson,,BIZ-BBE-0503
+9a191e68-85d2-4e32-8e6e-ddc94190a905,Simone Elkeles,,BIZ-BBE-0504
+f9f7aabd-0c9f-481e-9f0e-21c839d0ec49,Sophie Kinsella,,BIZ-BBE-0505
+a7edca8a-831f-42c6-b530-959badeef2ff,Sophocles,,BIZ-BBE-0506
+5e2d1c4a-11bb-482e-a9b3-7c880554e630,Stephanie Perkins,,BIZ-BBE-0507
+03d3a3b0-9f23-4ccc-b172-b280d406ec2a,Stephen Chbosky,,BIZ-BBE-0508
+b2c7872b-6157-4069-ac09-2cc6581c49a5,Stephen Hawking,,BIZ-BBE-0509
+ffaa37d2-afa8-40d6-9d9b-eef77632785b,Stephen King,,BIZ-BBE-0510
+392f3d7d-9ea2-4a96-a391-ecc3db82d8ce,Stephen R. Covey,,BIZ-BBE-0511
+abf35353-c971-42aa-a460-e72ed06ea915,Stephenie Meyer,,BIZ-BBE-0512
+31b5e35f-4fa3-4767-97b1-5938ecf00c10,Steve Snyder,,BIZ-BBE-0513
+4c89343d-f644-44a6-9508-3684ec553a09,Steven D. Levitt,,BIZ-BBE-0514
+964d4a7b-5663-47e4-8761-f2f2a896b627,Stieg Larsson,,BIZ-BBE-0515
+a8fac168-6b45-4f00-bba0-392e11f6c1e4,Sue Monk Kidd,,BIZ-BBE-0516
+d2e4580d-7290-42dc-8cce-8fe82e327030,Sun Tzu,,BIZ-BBE-0517
+dadfc660-463b-441b-bde1-b4c6969fed3f,Susan Ee,,BIZ-BBE-0518
+e9c3ba4d-97f1-46e0-b23a-205badb91a99,Susanna Clarke,,BIZ-BBE-0519
+db752c6a-fcea-4479-b715-4e5c00b5ebd7,Suzanne Boisvert,,BIZ-BBE-0520
+b3ba8099-0488-46ff-8093-6b9555858a0b,Suzanne Collins,,BIZ-BBE-0521
+42cdc1e6-11d8-4846-9892-29854b8ffb62,Sylvain Reynard,,BIZ-BBE-0522
+03af926a-5ccf-4aa0-8253-75b3c01adbd8,Sylvia Day,,BIZ-BBE-0523
+13d8b537-a23e-4816-8e06-307dbc509f87,Sylvia Plath,,BIZ-BBE-0524
+10382352-091e-4131-a723-14800248024d,T.H. White,,BIZ-BBE-0525
+6dcdb01f-66ca-4fa6-ad95-06d99dbe2923,T.S. Eliot,,BIZ-BBE-0526
+8c412855-2edf-4f3f-b6ab-c18b8aa2a41d,Tabitha Suzuma,,BIZ-BBE-0527
+0e875cd6-cfa3-468d-9936-91eeb2d9230b,Tahereh Mafi,,BIZ-BBE-0528
+0a85c9fc-9407-413b-818d-cb15fb91f37f,Tammara Webber,,BIZ-BBE-0529
+a00231f3-8b1c-4f0b-be32-4fcc66c220f1,Tamora Pierce,,BIZ-BBE-0530
+9254ba5b-ed93-40db-a913-ca9ed876fe11,Tatiana de Rosnay,,BIZ-BBE-0531
+93050ef2-b361-4a75-af63-18b867f2a40c,Tennessee Williams,,BIZ-BBE-0532
+096a4971-7b1d-433b-8fa9-42a6c9de892f,Terry Goodkind,,BIZ-BBE-0533
+3b88d0f3-1378-4d1c-82be-a6f681372327,Terry Pratchett,,BIZ-BBE-0534
+54916636-8586-4c61-bea6-b98d957833b8,Thomas Hardy,,BIZ-BBE-0535
+fc746770-6d73-49b0-a3d2-61c002dde845,Thomas Harris,,BIZ-BBE-0536
+1d5635c6-c9b8-4cf9-bba5-c04b41cbc62e,Thomas Keneally,,BIZ-BBE-0537
+07c63f18-0dfd-46fc-ace0-69945501ba88,Thomas Mann,,BIZ-BBE-0538
+680ded23-6743-4470-b1a2-b61432d34681,Thomas Pynchon,,BIZ-BBE-0539
+c84ec0fa-5d20-4784-8dc0-0a710ee8d7e5,Tim Butcher,,BIZ-BBE-0540
+8ca5d153-6135-4787-9454-47bed3fce73d,Tim LaHaye,,BIZ-BBE-0541
+766d3161-df18-40d3-9110-f454e7cdd722,Tim O'Brien,,BIZ-BBE-0542
+87a0ee9d-04f7-4051-8ecf-c286aa63088f,Tom Clancy,,BIZ-BBE-0543
+8b29f469-202e-4bb4-a370-888939895ede,Tom Robbins,,BIZ-BBE-0544
+52aa7f0a-2c95-4933-ac3a-193501226e7a,Tom Wolfe,,BIZ-BBE-0545
+dc7fb74a-a314-4a0c-921f-bc286f2dcf12,Toni Morrison,,BIZ-BBE-0546
+1b350287-b133-457c-9da1-ec030cec3810,Traci Medford-Rosow,,BIZ-BBE-0547
+9d1f95ea-2cc9-4497-995a-74ba825eae8c,Tracy Chevalier,,BIZ-BBE-0548
+2a1a70fa-09e9-4853-a15f-88cba16ebe45,Trenton Lee Stewart,,BIZ-BBE-0549
+4b6d3dad-a8ab-46ee-be24-a69533a84824,Truman Capote,,BIZ-BBE-0550
+7696b0fe-560d-4102-a4e0-6e836f1a972e,Umberto Eco,,BIZ-BBE-0551
+f65995a9-7921-4de2-b132-c4244ef3e5f9,Unknown,,BIZ-BBE-0552
+36599734-50f6-443c-8bcb-25735aae53f7,Upton Sinclair,,BIZ-BBE-0553
+9b9d97b1-9d79-4e60-a2be-c49e5a390126,Ursula K. Le Guin,,BIZ-BBE-0554
+9b433ed8-15bb-41d6-ac8c-e26748e5c14d,V.C. Andrews,,BIZ-BBE-0555
+820bf63b-1f39-426b-add9-ff48a0efccc2,Veronica Roth,,BIZ-BBE-0556
+1b017f98-b710-4cab-8754-cd3efe61ef64,Victor Hugo,,BIZ-BBE-0557
+0a3ff225-f39b-4e05-9fd5-2f0a61d13109,Victoria Aveyard,,BIZ-BBE-0558
+4cb4297d-a90c-4322-a34d-ac5ecd549f64,Viktor E. Frankl,,BIZ-BBE-0559
+795c02ae-4042-4207-8de8-c90149060430,Vincent Bugliosi,,BIZ-BBE-0560
+b96515d2-4cdd-4a12-821d-03fe73b7db1e,Virgil,,BIZ-BBE-0561
+cda544ca-a412-4f8c-b665-35d2dd84bbcc,Virginia Woolf,,BIZ-BBE-0562
+80fd6943-6940-4071-b936-dc0d09e1121e,Vladimir Nabokov,,BIZ-BBE-0563
+bfc08b0d-add0-4442-8024-eb5158266b84,Voltaire,,BIZ-BBE-0564
+aad60b68-4e24-41f5-a49b-454f8a1301eb,W. Bruce Cameron,,BIZ-BBE-0565
+c4e10ea0-f26b-4b60-8ae6-e4e39431a431,W. Somerset Maugham,,BIZ-BBE-0566
+40eba7d3-c711-4388-95a5-f37958be8162,Wallace Stegner,,BIZ-BBE-0567
+838bb544-b8e6-4fd9-ab3d-06245714faf5,Wally Lamb,,BIZ-BBE-0568
+1ece6e52-bf77-4b65-822b-2dd75174c25c,Walt Whitman,,BIZ-BBE-0569
+a43c3ba4-a85a-44e5-bc18-65ddcdf9ad67,Walter M. Miller Jr.,,BIZ-BBE-0570
+2e6e0148-5e29-4932-9b64-3b30235f2c76,Walter Scott,,BIZ-BBE-0571
+7f49c69c-67a2-4df4-b67b-a439c05c2714,Wilkie Collins,,BIZ-BBE-0572
+53cd2c3b-25e2-4bc7-97e0-c95345b831b5,Willa Cather,,BIZ-BBE-0573
+8755ac37-0c0a-4c8c-9022-bc358ec43ea9,William Blake,,BIZ-BBE-0574
+5999316a-f379-48aa-b6b7-c082cbc0c468,William Faulkner,,BIZ-BBE-0575
+b8fdd21d-7478-4991-9dae-1ccc79f84a62,William Gibson,,BIZ-BBE-0576
+9bf6ca7e-f021-49e2-8820-7a68669d40ab,William Golding,,BIZ-BBE-0577
+75a4ee28-fc8b-457a-9079-86ec5f474c34,William Goldman,,BIZ-BBE-0578
+970b4544-0338-4046-9814-71b3e0d50c3f,William Makepeace Thackeray,,BIZ-BBE-0579
+8da29f9d-b0f3-4584-8208-5093746b1b52,William Paul Young,,BIZ-BBE-0580
+05405e2c-e022-44a0-a7c6-7d1baa657740,William Peter Blatty,,BIZ-BBE-0581
+c1978839-ae6c-4588-bb92-615f6f76c3d4,William S. Burroughs,,BIZ-BBE-0582
+30d011e2-cf85-4181-b9df-009d31bcde69,William Shakespeare,,BIZ-BBE-0583
+d6723e97-1165-490c-b8c1-f063fe5dcbae,William Styron,,BIZ-BBE-0584
+c290403b-975f-4360-a186-fee2cc45b18a,Wilson Rawls,,BIZ-BBE-0585
+94e4f4bb-6991-4ab7-8473-612be1b47d85,Winston Groom,,BIZ-BBE-0586
+b6ebd141-7981-4f08-9e5f-08fa680c1adb,Yann Martel,,BIZ-BBE-0587
+046884c6-0623-4f1f-8d6d-7255c351da63,Yevgeny Zamyatin,,BIZ-BBE-0588
+c24c43db-4b92-4a1d-b873-1496783ce46e,Yuval Noah Harari,,BIZ-BBE-0589
+e8a68d95-631a-4fc2-8e21-a9417934a026,Zora Neale Hurston,,BIZ-BBE-0590
+3c673a4c-1beb-46f5-99c3-41ce7b758890,أحمد جمال الدين رمضان,,BIZ-BBE-0591
+07a32d05-23b7-45ce-9567-1d5aa7da7350,سید مرتضی مصطفوی,,BIZ-BBE-0592
