@@ -1,5 +1,4 @@
 {
-  "scopes": [],
-  "attributes": [],
-  "role-templates": []
+  "xsappname": "library",
+  "tenant-mode": "dedicated"
 }

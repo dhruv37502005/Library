@@ -1,45 +1,45 @@
-# CAP Library
-_out
+# === Dependencies ===
+node_modules/
+
+# === CAP build output ===
+gen/
+_out/
+@cds-models/
 *.db
 *.sqlite
 connection.properties
 default-*.json
 .cdsrc-private.json
-gen/
-node_modules/
-target/
 
-# Web IDE, App Studio
-.che/
-.gen/
-
-# MTA
+# === MTA build output ===
+mta_archives/
 *_mta_build_tmp
 *.mtar
-mta_archives/
+resources/
 
-# Other
-.DS_Store
-*.orig
-*.log
-
-*.iml
-*.flattened-pom.xml
-
-# IDEs
-# .vscode
-# .idea
-
-# @cap-js/cds-typer
-@cds-models
-
-cat << 'EOF' > /home/user/projects/YOUR_PROJECT/.gitignore
-node_modules/
-gen/
-.env
-*.db
-*.sqlite
+# === Fiori build output ===
 dist/
+app/*/dist/
+app/*/webapp/localService/
+
+# === Secrets & env ===
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*-key.json
+service-keys/
+
+# === IDE & OS ===
 .vscode/
-mta_archives/
-EOFscratch/
+.idea/
+.DS_Store
+*.log
+*.orig
+
+# === Internal scratch (kept, but not deployed) ===
+scratch/
+.reset-recovery/
+notifications/PLAN.md
+test.http
