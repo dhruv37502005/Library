@@ -1,4 +1,38 @@
 {
   "xsappname": "library",
-  "tenant-mode": "dedicated"
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Viewer",
+      "description": "Read-only access to library catalog"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Full access — manage books, discounts, loans, notifications"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Can browse books, authors, categories",
+      "scope-references": ["$XSAPPNAME.Viewer"]
+    },
+    {
+      "name": "Admin",
+      "description": "Can manage library — full read/write",
+      "scope-references": ["$XSAPPNAME.Admin", "$XSAPPNAME.Viewer"]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "Library_Viewer",
+      "description": "Library app — Viewer role",
+      "role-template-references": ["$XSAPPNAME.Viewer"]
+    },
+    {
+      "name": "Library_Admin",
+      "description": "Library app — Admin role",
+      "role-template-references": ["$XSAPPNAME.Admin"]
+    }
+  ]
 }

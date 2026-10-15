@@ -1,7 +1,7 @@
 _schema-version: 3.3.0
 ID: Library
 description: A simple CAP project.
-version: 1.0.0
+version: 1.0.3
 modules:
 - name: Library-srv
   type: nodejs
@@ -112,7 +112,7 @@ resources:
   parameters:
     config:
       tenant-mode: dedicated
-      xsappname: Library-${org}-${space}
+      xsappname: library
     path: ./xs-security.json
     service: xsuaa
     service-plan: application

@@ -113,10 +113,17 @@ annotate service.Books with @(
         TypeName       : 'Book',
         TypeNamePlural : 'Books',
         Title          : { Value : title       },
-        Description    : { Value : author.name }
+        Description    : { Value : author.name },
+        // Added Session P1: renders coverImageUrl as the Object Page hero image.
+        // Fiori Elements V4 reads ImageUrl from @UI.HeaderInfo; the field must be
+        // an Edm.String containing a URL (which coverImageUrl already is).
+        ImageUrl       : coverImageUrl
     },
 
-    UI.LineItem : [
+        UI.LineItem : [
+        // Added Session P1: cover thumbnail. Renders as <img> because
+        // coverImageUrl is annotated with @UI.IsImageUrl below.
+        { Value: coverImageUrl, Label: 'Cover' },
         { Value: title,       Label: 'Title'  },
         { Value: author.name, Label: 'Author' },
         { Value: genre,       Label: 'Genre'  },
@@ -190,3 +197,23 @@ annotate service.Books actions {
     );
 };
 
+// ─────────────────────────────────────────────────────────────
+// Session P1: coverImageUrl field-level semantics
+//
+// @UI.IsImageUrl tells Fiori Elements to render the string as an
+// image (<img src="...">) rather than plain text. This is what
+// makes the thumbnail column and hero image actually appear.
+//
+// @Common.Text provides the alt-text fallback (uses `title`).
+// @Common.Label sets the column header when used in @UI.LineItem.
+//
+// Syntax note: `annotate X with { field @(...) }` is the correct
+// form for field-level annotations. `annotate X.field @(...)` also
+// works but is less readable when multiple fields are involved.
+// ─────────────────────────────────────────────────────────────
+annotate service.Books with {
+    coverImageUrl @(
+        UI.IsImageUrl : true,
+        Common.Label  : 'Cover'
+    )
+};
