@@ -34,6 +34,9 @@
   },
   "private": true,
   "cds": {
+    "watch": {
+      "open": "com.dhruv.listobjectlibrary/index.html"
+    },
     "requires": {
       "[production]": {
         "auth": "xsuaa"

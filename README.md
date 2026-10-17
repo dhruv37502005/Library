@@ -22,6 +22,30 @@ A working library system with books, authors, categories, lending, discounts, an
 
 ---
 
+## 📸 Screenshots
+
+### Authors & Books Management
+![Authors List](docs/images/screenshots/01-authors-list.png)
+*Standard Fiori Elements List Report with integrated cover thumbnails.*
+
+### Object Page & Actions
+![Book Detail](docs/images/screenshots/02-book-object-page.png)
+*Object Page featuring the cover image, dynamic effective pricing, and bound actions.*
+
+### Analytical List Page
+![Analytics Chart](docs/images/screenshots/05-analytics-chart.png)
+*V4 Analytical List Page with DynamicMeasures and aggregated stock visualization.*
+
+### Event-Driven Notifications
+![Notifications UI](docs/images/screenshots/04-notifications-ui.png)
+*Notification delivery dashboard powered by the CAP in-process outbox.*
+
+### Security Proof
+![401 Proof](docs/images/screenshots/06-auth-401-proof.png)
+*Terminal curl output proving XSUAA auth is strictly enforced (401 Unauthorized).*
+
+---
+
 ## ✅ What's Actually Working
 
 | Layer | Component | Status |
@@ -47,35 +71,29 @@ Honest list of what's still open: [`docs/06-known-limitations.md`](docs/06-known
 ```mermaid
 flowchart TB
     subgraph Browser["🌐 Browser"]
-        FE1["📘 list_object_library<br/>List Report + Object Page"]
-        FE2["📕 loan-management<br/>Borrow / Return workflows"]
-        FE3["📊 library-analytics<br/>Analytical List Page"]
-        FE4["🔔 notifications-ui<br/>Delivery status + mark-as-read"]
+        FE1["📘 list_object_library<br/>(Fiori Elements)"]
+        FE2["📕 loan-management<br/>(Fiori Elements)"]
+        FE3["📊 library-analytics<br/>(Fiori Elements)"]
+        FE4["🔔 notifications-ui<br/>(Fiori Elements)"]
     end
 
-    subgraph CF["☁️ SAP BTP — Cloud Foundry"]
-        SRV["⚙️ Library-srv<br/>CAP Node.js · OData V4"]
-        XSUAA["🔐 XSUAA<br/>Scopes: Viewer · Admin"]
-        HDI["💾 HANA HDI<br/>Library-db"]
-        ANS["📮 Alert Notification<br/>Library-ANS"]
+    subgraph BTP["☁️ SAP BTP - Cloud Foundry"]
+        SRV["⚙️ Library-srv<br/>CAP Node.js Runtime"]
+        XSUAA["🔐 XSUAA<br/>Authentication & Roles"]
+        HDI["💾 Library-db<br/>HANA HDI Container"]
+        ANS["📮 Library-ANS<br/>Alert Notification"]
     end
 
-    subgraph CPI["🔄 Integration Suite (separate tenant)"]
-        IFLOW1["Hello CPI<br/>JSON transform"]
-        IFLOW2["Book Enricher<br/>Google Books API"]
+    subgraph CPI["🔄 Integration Suite (Separate)"]
+        IFLOW["Book Enricher<br/>(Google Books API)"]
     end
 
-    FE1 -->|OData V4| SRV
-    FE2 -->|OData V4| SRV
-    FE3 -->|OData V4| SRV
-    FE4 -->|OData V4| SRV
-
-    SRV -->|JWT validation| XSUAA
-    SRV -->|CDS queries| HDI
-    SRV -->|cds.emit BookBorrowed/Returned| SRV
-    SRV -->|OAuth2 + Producer API| ANS
-    SRV -.->|outbound enrichment| IFLOW2
-    IFLOW1 -.->|JSON payload| SRV
+    FE1 & FE2 & FE3 & FE4 -->|OData V4| SRV
+    SRV -->|JWT Validation| XSUAA
+    SRV -->|SQL / CDS Queries| HDI
+    SRV -->|cds.emit Events| SRV
+    SRV -->|OAuth2| ANS
+    SRV -.->|Outbound API Call| IFLOW
 ```
 
 Full narrative + component-by-component decisions: [`docs/02-architecture.md`](docs/02-architecture.md)
@@ -96,7 +114,6 @@ Full narrative + component-by-component decisions: [`docs/02-architecture.md`](d
 | **Deployment** | Cloud Foundry · MTA build tool (`mbt`) |
 | **Integration** | SAP Integration Suite — Cloud Platform Integration (CPI) |
 | **Notifications** | SAP Alert Notification Service · Nodemailer (Ethereal for tests) |
-| **CI** | GitHub Actions (workflows in `.github/workflows/`) |
 
 ---
 
@@ -105,8 +122,6 @@ Full narrative + component-by-component decisions: [`docs/02-architecture.md`](d
 ### Domain Model (CDS)
 - **11 entities** across 3 namespaces (`smart.library`, `smart.library.Lending`, `smart.library.Sales`)
 - **Reusable types** — `Price`, `BusinessID`, `StockQty`, enums for `GenreType`, `RecipientType`, `DeliveryStatus`
-- **Structured types** — `Address` embedded in `Profiles`
-- **Aspects** — custom `AuditInfo`, plus built-in `cuid` and `managed`
 - **Compositions & associations** with backreferences
 - **Calculated elements** — `availability` computed via CDS `case` expression
 - **CDS views** — `BooksWithAuthor` join exposed as read-only entity
@@ -127,8 +142,6 @@ Full narrative + component-by-component decisions: [`docs/02-architecture.md`](d
 - `CatService` emits `BookBorrowed` / `BookReturned` via `cds.emit()` → CAP Outbox
 - `NotificationsService` subscribes, applies **idempotency** via `RawEvents.eventId` unique constraint
 - **Fan-out** — one event → 2 rows (member + admin)
-- **Best-effort delivery** — per-row `deliveryStatus`, `deliveredAt`, `deliveryError` tracking
-- **Dual channel** — Ethereal SMTP + ANS Producer API (configurable via `NOTIFY_CHANNEL`)
 
 ### Integration (CPI)
 - **Hello CPI** — validates the tenant connection with a JSON transform
@@ -138,7 +151,7 @@ Full narrative + component-by-component decisions: [`docs/02-architecture.md`](d
 
 ## 📁 Repository Structure
 
-```
+```text
 Library/
 ├── app/                       # Fiori Elements apps (SAPUI5)
 │   ├── list_object_library/   # Books — List Report + Object Page
@@ -147,8 +160,8 @@ Library/
 │   ├── library-overview/      # OVP (documented dead-end — kept for learning)
 │   └── notifications-ui/      # Notifications — delivery status + mark-as-read
 ├── db/
-│   ├── schema.cds             # Library domain model (books, authors, lending, sales)
-│   ├── notifications-schema.cds # Notifications domain (events, deliveries)
+│   ├── schema.cds             # Library domain model
+│   ├── notifications-schema.cds # Notifications domain
 │   └── data/                  # CSV seed data (1,000 books, 592 authors, etc.)
 ├── srv/
 │   ├── cat-service.cds|.js    # Main catalog service + custom handlers
