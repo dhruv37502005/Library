@@ -1,257 +1,193 @@
-# 📚 Library — A Full-Stack SAP BTP Application
+# 📚 Library — I built every layer of SAP BTP so you don't have to guess if I know it
 
-> A library management system built end to end on SAP Business Technology Platform:
-> data model, OData services, Fiori apps, authentication, event-driven notifications, and integration.
-> **CAP · OData V4 · Fiori Elements · HANA Cloud · XSUAA · MTA · Alert Notification · CPI**
+> Data model → OData API → business logic → events → Fiori UI → HANA → auth → Cloud Foundry.
+> One repo. One dev. Zero tutorial copy-paste.
 
 [![CAP](https://img.shields.io/badge/SAP%20CAP-9.x-0FAAFF?style=flat-square)](https://cap.cloud.sap)
 [![OData](https://img.shields.io/badge/OData-V4-orange?style=flat-square)](https://www.odata.org)
-[![Fiori Elements](https://img.shields.io/badge/Fiori%20Elements-4%20apps%20deployed-green?style=flat-square)](https://experience.sap.com/fiori-design)
+[![Fiori Elements](https://img.shields.io/badge/Fiori%20Elements-V4-green?style=flat-square)](https://experience.sap.com/fiori-design)
 [![HANA](https://img.shields.io/badge/HANA%20Cloud-HDI-red?style=flat-square)](https://www.sap.com/products/hana.html)
 [![BTP](https://img.shields.io/badge/BTP-Cloud%20Foundry-008FD7?style=flat-square)](https://www.sap.com/products/technology-platform.html)
 
-<!--
-  AUTHOR CHECKLIST — confirm, then delete this comment:
-  [ ] The 5 screenshot files exist under docs/images/screenshots/
-  [ ] Dataset credit: correct source (Kaggle or Zenodo) + its license allows reuse
-  [ ] If you add @requires/@restrict later, update the Auth rows below
--->
+---
+
+## 🎯 ok so what is this
+
+It's a library app. Sounds basic. It's not.
+
+- **Librarians** run the catalog: restock, drop time-boxed discounts, log borrows and returns.
+- **Every borrow/return fires an event.** A separate service catches it and sends notifications (in-app + email). The catalog has no idea notifications even exist. That's the point.
+- **Analysts** get a stock-by-genre dashboard.
+- **~1,000 real books, 592 real authors**, with real titles, prices, genres and cover art. No `Book 1`, `Book 2` energy here.
+
+Deployed and tested on SAP BTP (trial, so it's not up 24/7). Runs on your laptop with **zero** BTP account.
+
+**Why tho?** I'm a SAPUI5/Fiori dev. I was tired of only knowing the UI layer, so I built everything underneath it myself.
+
+**Start here 👉** [Architecture](docs/02-architecture.md) · [Code tour](docs/03-code-tour.md) · [Deploy it yourself](docs/04-deploy-from-scratch.md)
 
 ---
 
-## 🎯 What this is
-
-A working library system: books, authors, categories, discounts, members, loans, and notifications.
-
-- **Librarians** manage the catalog, run time-bound discounts, restock, and record borrows and returns.
-- **Every borrow or return emits an event**, which a separate service turns into notifications (in-app rows + email).
-- **Analysts** see stock and pricing by genre in an analytical app.
-
-It is deployed and verified on an SAP BTP trial account (not permanently hosted), and runs fully on a laptop with no BTP account at all.
-
-**Why it exists:** I built it to learn the SAP cloud stack across every layer — not a tutorial clone, but a system with real domain rules, an event-driven design, a real deployment, and documented trade-offs and dead ends.
-
-**Start here:** [Architecture →](docs/02-architecture.md) · [Code tour →](docs/03-code-tour.md) · [Deploy it yourself →](docs/04-deploy-from-scratch.md)
-
----
-
-## 🧭 SAP terms in plain English
-
-| Term | What it means here |
-|---|---|
-| **CAP** | SAP's Node.js framework. You describe data in CDS; CAP generates the database and the API |
-| **CDS** | The `.cds` files that define entities (tables), relations, and services |
-| **OData V4** | A REST standard with built-in filtering, paging and metadata — the UIs read this metadata to draw themselves |
-| **Fiori Elements** | UIs generated from annotations: you describe *what* to show, the framework renders the screen |
-| **BTP / Cloud Foundry** | SAP's cloud; Cloud Foundry is the runtime that hosts the Node.js app |
-| **HANA Cloud / HDI** | The database; an HDI container is an isolated schema owned by this app |
-| **XSUAA** | BTP's login service: issues tokens (JWT) and defines roles |
-| **MTA** | One `mta.yaml` describing every app and cloud service; one command deploys all of it |
-| **ANS** | Alert Notification Service — routes alerts to email and other channels |
-| **CPI** | Cloud Platform Integration — SAP's tool for connecting systems with visual "iFlows" |
-
----
-
-## 📸 Screenshots
-
-### Books — List Report
-![Books list](docs/images/screenshots/01-authors-list.png)
-*List Report with cover thumbnails rendered from `coverImageUrl` via `@UI.IsImageUrl`.*
-
-### Book — Object Page
-![Book detail](docs/images/screenshots/02-book-object-page.png)
-*Cover image, effective price after active discounts, and the `restock` / `applyDiscount` actions.*
-
-### Analytics — Analytical List Page
-![Analytics chart](docs/images/screenshots/05-analytics-chart.png)
-*Stock by genre, driven by aggregation annotations and V4 dynamic measures.*
-
-### Notifications
-![Notifications](docs/images/screenshots/04-notifications-ui.png)
-*Notification rows produced by events, with delivery status and mark-as-read.*
-
-### Security check
-![401 proof](docs/images/screenshots/06-auth-401-proof.png)
-*Anonymous call to the deployed service returns 401 Unauthorized.*
-
----
-
-## ✅ What's working
-
-| Layer | Component | Status |
-|---|---|---|
-| **Backend** | CAP Node.js service `Library-srv` (CatService + NotificationsService) | ✅ Deployed and verified on BTP trial |
-| **Data** | HANA Cloud HDI container, seeded with ~1,000 real books and 592 authors | ✅ Deployed via HDI deployer |
-| **Auth** | XSUAA: 2 scopes, 2 role templates, 2 role collections | ✅ Login required (401 on anonymous) · ⏳ role checks (`@requires`) planned |
-| **Frontend** | Fiori Elements apps in the HTML5 Apps Repository | ✅ 4 deployed · loan-management runs locally · library-overview kept as a documented dead end |
-| **Events** | `BookBorrowed` / `BookReturned` → idempotent consumer → fan-out | ✅ Working |
-| **Email** | Nodemailer + Ethereal test inbox | ✅ Working |
-| **Alerting** | SAP Alert Notification Service | ✅ Bound via MTA · delivery proven from cockpit · ⏳ CAP-triggered path not yet verified |
-| **Integration** | CPI iFlow "Hello CPI" (JSON transform) | ✅ Working |
-| **Integration** | CPI iFlow "Book Enricher" (external books API) | ⚠️ Built and deployed; API returns 429 from the shared tenant IP |
-
----
-
-## 🏗️ Architecture
+## 🏗️ how it's wired
 
 ```mermaid
 flowchart TB
     subgraph Client["🌐 Browser"]
-        FE["Fiori Elements apps<br/>Books · Analytics · Notifications · Loans*"]
+        FE["Fiori Elements apps<br/>Books · Analytics · Notifications · Loans"]
     end
 
     subgraph BTP["☁️ SAP BTP — Cloud Foundry"]
-        REPO["📦 HTML5 Apps Repo<br/>(stores the UI files)"]
-        subgraph SRVAPP["⚙️ Library-srv  (one CAP Node.js app)"]
+        REPO["📦 HTML5 Apps Repo"]
+        subgraph SRVAPP["⚙️ Library-srv (CAP Node.js)"]
             CAT["CatService<br/>/odata/v4/cat"]
             NOTIF["NotificationsService<br/>/notifications"]
         end
-        XSUAA["🔐 XSUAA<br/>login tokens + roles"]
+        XSUAA["🔐 XSUAA"]
         HDI["💾 HDI container<br/>on HANA Cloud"]
         ANS["📮 Alert Notification"]
     end
 
     MAIL["✉️ Ethereal SMTP<br/>(test inbox)"]
 
-    subgraph CPI["🔄 Integration Suite — standalone"]
-        IFLOW["Book Enricher iFlow<br/>→ external books API"]
-    end
-
     REPO -. serves UI .-> FE
     FE -->|OData V4 + JWT| CAT
     FE -->|OData V4 + JWT| NOTIF
     CAT -->|validate token| XSUAA
-    CAT -->|CQL queries| HDI
-    CAT -->|event: BookBorrowed / BookReturned| NOTIF
-    NOTIF -->|CQL queries| HDI
+    CAT -->|CQL| HDI
+    CAT -->|BookBorrowed / BookReturned| NOTIF
+    NOTIF -->|CQL| HDI
     NOTIF -->|NOTIFY_CHANNEL=ethereal| MAIL
     NOTIF -->|NOTIFY_CHANNEL=ans| ANS
 ```
 
-\* Loans app runs locally. CPI is a separate integration exercise and is not called by the CAP app.
+**tl;dr of the flow**
+- The UI talks **OData V4** to one CAP app that runs two services.
+- No valid **XSUAA** token means no entry (401). Every request gets checked.
+- **CatService** handles the catalog and lending, and fires events when a book is borrowed or returned.
+- **NotificationsService** picks those events up, writes the notification rows, and delivers them. One env var decides where they go: the Ethereal test inbox locally, SAP Alert Notification on BTP.
+- All the data lives in a **HANA HDI container**. Locally it's in-memory SQLite, same code.
 
-Layer-by-layer explanation, request flows and design decisions: [`docs/02-architecture.md`](docs/02-architecture.md)
-
----
-
-## ✨ Highlights
-
-### Domain model (CDS)
-- Catalog (`Books`, `Authors`, `Profiles`), classification (`Categories`, `BookCategories`, `BookTags`), pricing (`Discounts`), lending (`Members`, `Loans`), and a separate `smart.notifications` namespace (`RawEvents`, `Notifications`)
-- Reusable aspects (`cuid`, `managed`), custom types (`Price`, `BusinessID`), enums (`BookStatus`, `RecipientType`, `DeliveryStatus`)
-- Compositions, many-to-many via a junction entity, a calculated element (`availability`), and read-only join views
-- Analytics annotations that power the ALP chart
-
-### Service layer
-- **Bound actions:** `restock`, `applyDiscount` (range check, required dates, `endDate ≥ startDate`)
-- **Unbound actions:** `borrowBook`, `returnBook`, `resetAllStock`
-- **Functions:** `getTotalBooks`, `getExpensiveBooks`, `getBookCountByGenre`
-- **`effectivePrice`** computed at read time from the best discount active today
-
-### Design decisions worth asking me about
-- **Discounts are separate rows, never a price overwrite** — reversible, auditable, no "20% twice = 36% off" bug
-- **Events instead of direct calls** — catalog code knows nothing about email or alerts
-- **Idempotency** — each event has its own `eventId`; a unique constraint on `RawEvents.eventId` makes redelivery harmless
-- **`NOTIFY_CHANNEL` switch** — same code delivers to a free test inbox locally and to ANS on BTP
-- **CSV seeding from Git** — the trial account is wiped regularly; a fresh clone + deploy rebuilds everything
+Full layer-by-layer breakdown, request flows and design trade-offs: [`docs/02-architecture.md`](docs/02-architecture.md)
 
 ---
 
-## 📁 Repository structure
+## 🧱 what's inside
+
+| Layer | Stack | What it actually does |
+|---|---|---|
+| **Data model** | CDS on HANA Cloud (HDI) | Catalog, pricing, lending + a separate notifications domain. Aspects, enums, compositions, many-to-many, calculated fields, views |
+| **API** | OData V4 via CAP | Two services. CRUD for free, plus bound/unbound actions and read-only functions |
+| **Logic** | CAP Node.js handlers | Validation, discounts, `effectivePrice`, borrow/return rules |
+| **Events** | CAP emit / subscribe | Idempotent consumer, fan-out, delivery tracking |
+| **UI** | Fiori Elements (List Report, Object Page, Analytical List Page) | Annotation-driven: cover images, actions, stock-by-genre chart |
+| **Auth** | XSUAA | Token-checked API, Viewer/Admin roles |
+| **Delivery** | Nodemailer + SAP Alert Notification | One env var flips between test inbox and real alerting |
+| **Deploy** | MTA → Cloud Foundry | One `mta.yaml`, one command, every service created |
+| **Integration** | SAP Integration Suite (CPI) | Book Enricher iFlow: HTTPS → Request-Reply → external books API. Runs standalone, not called by the CAP app |
+
+---
+
+## 🧠 design calls I'd defend in an interview
+
+- **Discounts never touch `Books.price`.** They're their own rows with a validity window. Reversible, auditable, and no "20% twice = 36% off" bug. `effectivePrice` is computed at read time, so it's always right for *today*. Trade-off: one query per row (N+1). Fine at this scale; batching is the prod move.
+- **Events over direct calls.** `borrowBook` just announces what happened. NotificationsService decides what to do with it. Swap or scale either side without touching the other.
+- **Idempotency is built in, not vibes.** Every event carries its own `eventId`, and a unique constraint on `RawEvents.eventId` means a redelivered event gets caught and skipped. No duplicate emails.
+- **Fan-out + delivery status.** One event → a member row + an admin row, each going `PENDING → SENT / FAILED` with the error saved. Failures are visible and retryable, not silently lost.
+- **`NOTIFY_CHANNEL` switch.** Same code: free Ethereal inbox locally, SAP Alert Notification on BTP.
+- **`req.params.at(-1)` for bound actions.** Still works when the action is called through a navigation path like `Authors(..)/books(..)/restock`.
+- **Data lives in Git.** BTP trial wipes itself regularly. Clone + deploy = full catalog back. Reproducible beats manual imports.
+- **Services declared in `mta.yaml`, never created by hand.** One source of truth, zero name clashes.
+
+---
+
+## 📁 repo map
 
 ```text
 Library/
-├── app/                          # Fiori Elements apps
+├── app/
 │   ├── list_object_library/      # Books — List Report + Object Page
 │   ├── library-analytics/        # Analytical List Page (stock by genre)
-│   ├── notifications-ui/         # Notifications — delivery status + mark-as-read
-│   ├── loan-management/          # Loans — runs locally (CF deploy config pending)
-│   └── library-overview/         # OVP — documented dead end (OVP needs OData V2)
+│   ├── notifications-ui/         # Notifications + mark-as-read
+│   ├── loan-management/          # Loans — borrow/return
+│   └── library-overview/         # OVP — kept on purpose as a dead end (see below)
 ├── db/
-│   ├── schema.cds                # Library domain model
+│   ├── schema.cds                # Library domain
 │   ├── notifications-schema.cds  # Notifications domain
 │   └── data/                     # CSV seed data
 ├── srv/
 │   ├── cat-service.cds / .js     # Catalog & lending API + handlers
-│   ├── cat-service-ui.cds        # Fiori UI annotations
-│   ├── notification-service.cds / .js   # Event consumer + notifications API
-│   └── lib/                      # mailer.js (Ethereal), ans-client.js (ANS OAuth2)
-├── docs/                         # Documentation
-├── mta.yaml                      # Deployment descriptor (all modules + services)
-├── xs-security.json              # XSUAA scopes, role templates, role collections
-└── package.json
+│   ├── cat-service-ui.cds        # Fiori annotations
+│   ├── notification-service.cds / .js   # Event consumer
+│   └── lib/                      # mailer.js, ans-client.js (OAuth2 client-credentials)
+├── docs/
+├── mta.yaml
+└── xs-security.json
 ```
 
 ---
 
-## 🚀 Run it
+## 🚀 run it
 
-### Locally — 5 minutes, no BTP account needed
+### Local — 5 min, no BTP needed
 ```bash
 git clone https://github.com/dhruv37502005/Library.git
 cd Library
 npm install
 npx cds watch
 ```
-Open `http://localhost:4004`. Data comes from the CSV files into an in-memory SQLite database.
+Open `http://localhost:4004`. CSVs load into in-memory SQLite. That's it.
 
-### Deploy to SAP BTP (Cloud Foundry)
-Prerequisites: BTP trial account, SAP HANA Cloud instance visible to your CF space, Cloud Foundry CLI with the MultiApps plugin, `mbt`.
-
+### Ship it to BTP
+Needs: BTP account, a HANA Cloud instance mapped to your CF space, CF CLI + MultiApps plugin, `mbt`.
 ```bash
 cf login -a https://api.cf.<region>.hana.ondemand.com --sso
 mbt build
 cf deploy mta_archives/Library_*.mtar
-```
-`mta.yaml` creates every service instance (XSUAA, HDI container, HTML5 repo, ANS, destination, connectivity) — do not create them by hand.
+```*`mta.yaml` creates every service. *on't `cf create-service`*anything by hand. Trust.
 
-Full walkthrough, including role assignment after a trial reset: [`docs/04-deploy-from-scratch.md`](docs/04-deploy-from-scratch.md)
-
----
-
-## ⚠️ Known limitations
-
-This is a learning project, and I keep this list honest on purpose.
-
-**Not built yet**
-- **Role enforcement:** roles exist in `xs-security.json`, but `@requires` / `@restrict` are not yet in the service model — today the system checks *that* you are logged in, not *which* role you have
-- **Opening the UIs on BTP:** apps are in the HTML5 repo; serving them needs SAP Work Zone (requires IAS on trial) or an app router
-- **Loans app on BTP:** missing `ui5-deploy.yaml` + zip step
-- **ANS from CAP end to end:** bound and proven from the cockpit, not yet triggered from a handler
-- **Persistent outbox / SAP Event Mesh:** events are in-process today
-- **Automated tests:** none yet
-
-**Known issues (tracked)**
-- `restock` with an unknown book ID returns a server error instead of a clean 404 (`req.error` doesn't stop execution; needs `return req.reject`)
-- `getExpensiveBooks` uses a fixed threshold of 300, above every price in the current catalog, so it returns an empty list
-- `BookReturned` events are logged with event type `BookBorrowed`, and return notifications ignore `NOTIFY_CHANNEL`
-- Seed data: a few `BookCategories` rows reference old book IDs, about 11 publish dates are in the future, and author `country` is empty
-
-**Dead ends I hit (and what I learned)**
-- Overview Page (OVP) only supports OData V2 → kept `library-overview` as a documented example
-- Analytical List Page on V4 needs `@Aggregation.ApplySupported` and dynamic measures, not classic measures
-- Managed Work Zone needs IAS + OIDC trust, not available on trial by default
-- Bound actions must read the key with `req.params.at(-1)` to work through navigation paths
-- The CPI external API rate-limited the tenant's shared outbound IP (HTTP 429)
+Full wal*through (incl. role ass*gnment after a trial reset): [`doc*/04-deploy-from-scrat*h.md`](docs/04-deploy-from-*cratch.md)
 
 ---
 
-## 🗺️ Next steps
-1. Role checks with `@requires` / `@restrict` + mock users for local testing
-2. Fix the known issues above
-3. Loans app deploy config
-4. A tool-calling AI agent (Gemini, free tier) that answers questions by calling CatService over OData
-5. Persistent outbox and SAP Event Mesh
+## ⚠️ known limit*tions — keeping*it 💯
+
+<!-- AUTHOR: delete any lin* below that you've*already fixed and pushed. -->
+
+**S*ill cooking**
+- Opening*the UIs *on BTP* needs SAP Work Zo*e (wants I*S on trial) or an app router. The *pps are in the HTML5 repo, just no* served yet. Locally they all run.*- SAP Alert Notification is bound *nd proven from the cockpit; trigge*ing it from a CAP handler end to e*d isn't verified yet.
+- Events are*in-process. Persistent outbox / SA* Event Mesh is next.
+- No automate* tests yet. Big L, it's on the lis*.
+
+**Bugs I found in my own code (*nd know how to fix)**
+- `restock` *ith an unknown book ID throws a 50* instead of a clean 404. `req.erro*` doesn't stop execution; it needs*`return req.reject`.
+- `getExpensi*eBooks` has a hardcoded threshold *f 300, above every price in the re*l catalog, so it returns nothing.
+* `BookReturned` events get logged *s `BookBorrowed`, and return not*fications skip `NOTIFY_CHANNEL`.
+-*Seed data: a few `BookCategories` *ows point at*old book IDs, ~11 publish dates ar* in the future (two-digit-*ear parsing), and author `country`*is empty.
+
+**Dead ends that taught*me the most**
+- **Overview Page is*OData V2 only.** On V4 it just bre*ks. Kept `library-overview`*as the receipt.
+- **Analytical Lis* Page on V4** needs `@Aggregation.*pplySupported` + dyn*mic measures. Classic measures = e*pty chart.
+- **Managed Work Zone n*eds IAS + OIDC trust**, which isn'* on trial by default.
+- **CP* → external API got rate-limited (*TTP 429)** because the tenant shar*s one outbound IP. Not a config bu*, a platform reality.
+- **Joule-ge*erated UIs** land at around 65*. Always review the annotations.
+
+*--
+
+## 🗺️ what's next
+1. Close th* bugs above
+2. Persistent*outbox → SAP Event Mesh
+3. Tool-ca*ling AI agent (Gemini free tier) t*at answers questions*by calling CatService over OData
+4* Tests
 
 ---
 
-## 📜 License
+## 🙏 *redits
+- **Best Books Ever** publi* dataset: book*and author data
+- SAP CAP docs and*samples
+
+## 📜 license
 MIT
 
-## 🙏 Credits
-- **Best Books Ever** public dataset — book and author seed data
-- SAP CAP documentation and samples — reference patterns
-
 ---
 
-*Built by Dhruv Rathore while growing from SAPUI5/Fiori into full-stack SAP BTP development. Feedback welcome.*
+**uilt by **Dhruv Rathore**: a SAPUI*/F*ori dev who wanted to understand e*erything underneath the UI, so I b*ilt every layer myself (model, API* events, auth, database, deploymen*). Every decision here is one I ca* explain and defend. Ask me about *ny line.*
