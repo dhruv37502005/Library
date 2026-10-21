@@ -9,17 +9,23 @@
 
 [![CAP](https://img.shields.io/badge/SAP%20CAP-9.x-0FAAFF?style=for-the-badge)](https://cap.cloud.sap)
 [![OData](https://img.shields.io/badge/OData-V4-orange?style=for-the-badge)](https://www.odata.org)
-https://img.shields.io/badge/Fiori%20Elements-V4-green?style=for-the-badge](https://experience.sap.com/fiori-design)
-https://img.shields.io/badge/HANA%20Cloud-HDI-red?style=for-the-badge](https://www.sap.com/products/hana.html)
+[![Fiori Elements](https://img.shields.io/badge/Fiori%20Elements-V4-green?style=for-the-badge)](https://experience.sap.com/fiori-design)
+[![HANA Cloud](https://img.shields.io/badge/HANA%20Cloud-HDI-red?style=for-the-badge)](https://www.sap.com/products/hana.html)
 [![BTP](https://img.shields.io/badge/BTP-Cloud%20Foundry-008FD7?style=for-the-badge)](https://www.sap.com/products/technology-platform.html)
 
-#-ok-so-what-is-this · #️-how-its-wired · #-the-borrow-flow-end-to-end · #️-the-data-model · #-design-calls-id-defend · #-run-it · #️-keeping-it-
+[What is this](#what-is-this) ·
+[Architecture](#architecture) ·
+[Borrow flow](#the-borrow-flow-end-to-end) ·
+[Data model](#the-data-model) ·
+[Design calls](#design-calls-id-defend) ·
+[Run it](#run-it) ·
+[Known issues](#known-issues-and-limits)
 
 </div>
 
 ---
 
-## 🎯 ok so what is this
+## What is this
 
 It's a library app. Sounds basic. It's not.
 
@@ -29,13 +35,13 @@ It's a library app. Sounds basic. It's not.
 - **~1,000 real books, 592 real authors**, with real titles, prices, genres and cover art. No `Book 1`, `Book 2` energy here.
 
 > [!TIP]
-> No BTP account? No problem. The whole thing runs on your laptop in 5 minutes — jump to #-run-it.
+> No BTP account? No problem. The whole thing runs on your laptop in 5 minutes. Jump to [Run it](#run-it).
 
 **Why tho?** I'm a SAPUI5/Fiori dev. I was tired of only knowing the UI layer, so I built everything underneath it myself.
 
 ---
 
-## 🏗️ how it's wired
+## Architecture
 
 ```mermaid
 flowchart TB
@@ -68,6 +74,7 @@ flowchart TB
 ```
 
 **tl;dr**
+
 - The UI talks **OData V4** to one CAP app running two services.
 - No valid **XSUAA** token = no entry (401).
 - **CatService** owns the catalog and lending, and fires events.
@@ -86,9 +93,11 @@ flowchart TB
 | **Deploy** | MTA → Cloud Foundry | One `mta.yaml`, one command, every service created |
 | **Integration** | SAP Integration Suite (CPI) | Book Enricher iFlow: HTTPS → Request-Reply → external books API (standalone) |
 
+Want the long version? See [`docs/02-architecture.md`](docs/02-architecture.md), [`docs/03-code-tour.md`](docs/03-code-tour.md) and [`docs/04-deploy-from-scratch.md`](docs/04-deploy-from-scratch.md).
+
 ---
 
-## 🔄 the borrow flow, end to end
+## The borrow flow, end to end
 
 This is the part I'm proudest of. One click in the UI, and here's everything that happens:
 
@@ -122,64 +131,79 @@ Every notification tracks its own delivery, so nothing fails silently:
 
 ```mermaid
 stateDiagram-v2
-    [*] --> PENDING: row create*
-    PENDING --> SENT: delivered*    PENDING --> FAILED: error*saved to deliveryError
+    [*] --> PENDING: row created
+    PENDING --> SENT: delivered
+    PENDING --> FAILED: error saved to deliveryError
     SENT --> [*]
     FAILED --> [*]
 ```
 
 ---
 
-## 🗂️ the data model*
+## The data model
+
 ```mermaid
-erDi*gram
-    AUTHORS ||--o{ BOOKS : wr*tes*    AUTHORS ||--o* PROFILES : has
-    BOOKS ||--o{ D*SCOUNTS : "time-boxed"
-    B*OKS ||--o{ BOOK_T*GS : tagged
-    BOOK* ||--o{ B*OK_CATEGORIES : in
-    CATEGORIES *|--o{ B*OK_CATEGORIES : gro*ps
-    MEMBERS ||--o{ LOANS :*borrows
-    BOOKS ||--o{*LOANS : "l*nt out"
-    RAW_EVENTS ||--o{ NOTI*ICATIONS : produces
-    MEMBER* ||--o{ NOTIFICATION* : receives
-    BOOKS ||--o{ NOTIF*CAT*ONS : about
+erDiagram
+    AUTHORS ||--o{ BOOKS : writes
+    AUTHORS ||--o| PROFILES : has
+    BOOKS ||--o{ DISCOUNTS : "time-boxed"
+    BOOKS ||--o{ BOOK_TAGS : tagged
+    BOOKS ||--o{ BOOK_CATEGORIES : in
+    CATEGORIES ||--o{ BOOK_CATEGORIES : groups
+    MEMBERS ||--o{ LOANS : borrows
+    BOOKS ||--o{ LOANS : "lent out"
+    RAW_EVENTS ||--o{ NOTIFICATIONS : produces
+    MEMBERS ||--o{ NOTIFICATIONS : receives
+    BOOKS ||--o{ NOTIFICATIONS : about
 ```
 
-Two namespaces: `*mart*library` (catalog, pricing, lendin*) and `smart.notifications` (event* +*notifications). Built with reusabl* aspects (`cuid`, `managed`*, custom types, enums, composition*, a calculated `*vailability` field, and read-only *oin*views.
+Two namespaces: `smart.library` (catalog, pricing, lending) and `smart.notifications` (events + notifications). Built with reusable aspects (`cuid`, `managed`), custom types, enums, compositions, a calculated `availability` field, and read-only join views.
 
 ---
 
-## 🧠 design calls I'* defend
+## Design calls I'd defend
 
-- **Disc*unts never touch `Books.price`.** *wn rows, own*validity window. Reversible, audit*ble, no "20* twice = 36% off" bug. `effectiveP*ice` is computed at read time, alw*ys right for **oday*. Trade-off: N+1 que*ies. Fine at this scale; batching *s the prod move.
-- **Events over*direct calls.** `borrowBook` just *nnounces what happened. Scale or s*ap either side without touching th* other.
-- **Idempotency built in, *ot vibes.***Unique `eventId` per event + uniqu* constraint on `R*wEvents.eventId` = redelivered eve*ts get*skipped.
-- **Fan-out + delivery st*tus.** One event → member row + ad*in row, each `PENDING → SENT /*FAILED`.
-- **`NOTIFY*CHANNEL` switch.** Free test inbox*locally, SA* Alert Notification on BTP.*Same code.
-- **`req.params.at(-1*` for bound actions.** Works throu*h navigation pa*hs like `Authors(..)/books(..)/res*ock`*
-- **Data lives in Git.** BTP tria* wipes itself.*Clone + deploy = full catalog back*
-- **Services decl*red in `mta.yaml`, never by*hand.** One source of truth, z*ro name clashes.
+- **Discounts never touch `Books.price`.** Own rows, own validity window. Reversible, auditable, no "20% twice = 36% off" bug. `effectivePrice` is computed at read time, always right for **today**. Trade-off: N+1 queries. Fine at this scale; batching is the prod move.
+- **Events over direct calls.** `borrowBook` just announces what happened. Scale or swap either side without touching the other.
+- **Idempotency built in, not vibes.** Unique `eventId` per event + a unique constraint on `RawEvents.eventId` = redelivered events get skipped.
+- **Fan-out + delivery status.** One event → member row + admin row, each `PENDING → SENT / FAILED`.
+- **`NOTIFY_CHANNEL` switch.** Free test inbox locally, SAP Alert Notification on BTP. Same code.
+- **`req.params.at(-1)` for bound actions.** Works through navigation paths like `Authors(..)/books(..)/restock`.
+- **Data lives in Git.** A BTP trial wipes itself. Clone + deploy = full catalog back.
+- **Services declared in `mta.yaml`, never by hand.** One source of truth, zero name clashes.
 
 ---
 
-## 🚀 run i**
-### Local — 5 min*```bash
-git clone https://github.com/dhruv37502005/Library.git
-cd Lib*ary
-npm install
-npx cds watch
-```
-*pen `http://localhost:4004`. CSVs *oad into in-memory SQLite. Done.
+## Run it
 
-*## Ship it to BTP
+**Prerequisites:** Node.js ≥ 20 and npm. `@sap/cds-dk` is already a dev dependency, so no global install is needed.
+
+### Local (about 5 minutes)
+
 ```bash
-cf login*-a https://api.cf.<region>.hana.*ndemand.com --sso
-mbt build
-cf dep*oy mta_archives/Library_*.mtar
+git clone https://github.com/dhruv37502005/Library.git
+cd Library
+npm install
+npm run watch
+```
+
+Open <http://localhost:4004>. CSVs load into in-memory SQLite. Done.
+
+Locally, `NOTIFY_CHANNEL` defaults to `ethereal` (a throwaway test inbox). Set `NOTIFY_CHANNEL=ans` to use SAP Alert Notification instead.
+
+### Ship it to BTP
+
+```bash
+cf login -a https://api.cf.<region>.hana.ondemand.com --sso
+npm run build    # rimraf resources mta_archives && mbt build --mtar archive
+npm run deploy   # cf deploy mta_archives/archive.mtar --retries 1
 ```
 
 > [!IMPORTANT]
 > `mta.yaml` creates every service (XSUAA, HDI, HTML5 repo, ANS, destination, connectivity). Don't `cf create-service` anything by hand, and make sure your HANA Cloud instance is running and mapped to your CF space first.
+
+> [!CAUTION]
+> `npm run undeploy` tears everything down and **deletes the services and their data**.
 
 <details>
 <summary>📁 <b>repo map</b></summary>
@@ -201,7 +225,8 @@ Library/
 │   ├── cat-service-ui.cds        # Fiori annotations
 │   ├── notification-service.cds / .js
 │   └── lib/                      # mailer.js, ans-client.js
-├── docs/
+├── docs/                         # architecture, code tour, deploy guide
+├── test.http                     # REST client requests
 ├── mta.yaml
 └── xs-security.json
 ```
@@ -209,7 +234,7 @@ Library/
 
 ---
 
-## ⚠️ keeping it 💯
+## Known issues and limits
 
 <details>
 <summary>🍳 <b>still cooking</b></summary>
@@ -223,7 +248,6 @@ Library/
 <details>
 <summary>🐛 <b>bugs I found in my own code</b></summary>
 
-<!-- AUTHOR: delete every line you've already fixed and pushed. -->
 - `restock` with an unknown book ID throws a 500, not a clean 404 (`req.error` doesn't stop execution — needs `return req.reject`).
 - `getExpensiveBooks` has a hardcoded threshold above every price in the catalog, so it returns nothing.
 - `BookReturned` gets logged as `BookBorrowed`, and return notifications skip `NOTIFY_CHANNEL`.
@@ -242,7 +266,7 @@ Library/
 
 ---
 
-## 🗺️ what's next
+## What's next
 
 - [ ] Close the bugs above
 - [ ] Persistent outbox → SAP Event Mesh
@@ -262,3 +286,4 @@ so I built every layer myself. Every decision here is one I can explain and defe
 <sub>📜 MIT · Data: Best Books Ever public dataset · Patterns: SAP CAP docs</sub>
 
 </div>
+
