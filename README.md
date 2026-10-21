@@ -254,4 +254,4 @@ MIT
 
 ---
 
-*Built by Dhruv Rathore while growing from SAPUI5/Fiori into full-stack SAP BTP development. Feedback welcome..*
+*Built by Dhruv Rathore while growing from SAPUI5/Fiori into full-stack SAP BTP development. Feedback welcome.*
