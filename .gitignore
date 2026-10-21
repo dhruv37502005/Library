@@ -42,4 +42,4 @@ service-keys/
 scratch/
 .reset-recovery/
 notifications/PLAN.md
-test.http
+test.http.fiori-ai/
